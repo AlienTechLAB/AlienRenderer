@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <iostream>
 #include <cstdio>
-#include <time.h>
-#include "eVoWindowsFrameBuffer.hpp"
+#include <string>
+#include "eVolution3D/eVoWindowsFrameBuffer.hpp"
+#include "Application/Application.hpp"
 
 //---------------------------------------------------------------------------------------------------------
 
@@ -12,51 +13,44 @@ HWND WindowHandle;
 #define WIDTH 1024
 #define HEIGHT 784
 
-int pixel = 0;
-
 eVoWindowsFrameBuffer FrameBuffer;
+Application Demo;
 
 //---------------------------------------------------------------------------------------------------------
 
-void Render()
+void OnWMPaint(HWND windowHandle)
 {
-	int pixelsNo = FrameBuffer.GetBufferSizeInBytes() / 4;
-	unsigned int* pBuffer = (unsigned int*)FrameBuffer.GetBuffer();
+	PAINTSTRUCT ps;
+	BeginPaint(windowHandle, &ps);
 
-	for (int i = 0; i < pixelsNo; i++)
-	{
-		pBuffer[i] = pixel++;
-	}
+	clock_t t1 = clock();
+	Demo.UpdateFrameBuffer(&FrameBuffer);
+	clock_t t2 = clock();
+
+	HDC deviceContext = GetDC(windowHandle);
+	BitBlt(deviceContext, 0, 0, FrameBuffer.GetWidth(), FrameBuffer.GetHeight(), FrameBuffer.GetMemoryContext(), 0, 0, SRCCOPY);
+
+	SetBkMode(deviceContext, TRANSPARENT);
+	SetTextColor(deviceContext, 0x00FFFFFF);
+	long timeDifference = t2 - t1;
+	float frameTime = ((float)timeDifference) / (float)CLOCKS_PER_SEC;
+	int fps = 1.0f / frameTime;
+
+	std::string text = "FPS: " + std::to_string(fps);
+	TextOut(deviceContext, 0, 0, text.c_str(), text.length());
+	ReleaseDC(windowHandle, deviceContext);
+
+	EndPaint(windowHandle, &ps);
 }
 
 //---------------------------------------------------------------------------------------------------------
 
 LONG WINAPI WindowProc(HWND windowHandle, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	clock_t t1, t2;
-	long diff;
-	float frameTime;
-	float fps;
-	HDC deviceContext;
-
 	switch (uMsg)
 	{
 		case WM_PAINT:
-			PAINTSTRUCT ps;
-			BeginPaint(windowHandle, &ps);
-
-			t1 = clock();
-			Render();
-			t2 = clock();
-			diff = t2 - t1;
-			frameTime = ((float)diff) / (float)CLOCKS_PER_SEC;
-			fps = 1.0f / frameTime;
-			std::cout << fps << std::endl;
-
-			deviceContext = GetDC(windowHandle);
-			BitBlt(deviceContext, 0, 0, FrameBuffer.GetWidth(), FrameBuffer.GetHeight(), FrameBuffer.GetMemoryContext(), 0, 0, SRCCOPY);
-			ReleaseDC(windowHandle, deviceContext);
-			EndPaint(windowHandle, &ps);
+			OnWMPaint(windowHandle);
 			return 0;
 
 		case WM_SIZE:
@@ -69,6 +63,10 @@ LONG WINAPI WindowProc(HWND windowHandle, UINT uMsg, WPARAM wParam, LPARAM lPara
 			{
 				PostQuitMessage(0);
 				return 0;
+			}
+			else
+			{
+				Demo.OnKeyPressed(wParam);
 			}
 
 			break;
@@ -188,6 +186,7 @@ int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpsz
 			if (DefinePixelFormat())
 			{
 				FrameBuffer.Init(WIDTH, HEIGHT, WindowHandle);
+				Demo.Start();
 
 				// Main loop
 				while (true)
@@ -202,10 +201,12 @@ int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpsz
 					if (msg.message == WM_QUIT)
 						break;
 
+					Demo.MainLoopUpdate();
 					InvalidateRect(WindowHandle, NULL, false);
 				}
 
 				// Release
+				Demo.Release();
 				FrameBuffer.Release();
 				DestroyWindow(WindowHandle);
 			}

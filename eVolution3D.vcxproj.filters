@@ -20,11 +20,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="eVoFrameBuffer.h">
+    <ClInclude Include="eVolution3D\eVoFrameBuffer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="eVoWindowsFrameBuffer.hpp">
+    <ClInclude Include="eVolution3D\eVoWindowsFrameBuffer.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Application.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
