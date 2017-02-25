@@ -22,22 +22,45 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	//---------------------------------------------------------------------------------------------------------
 
+	public: void OnResize(int newWidth, int newHeight)
+	{
+		if (Bitmap != NULL)
+		{
+			SelectObject(MemoryContext, OldBitmap);
+			DeleteObject(Bitmap);
+			BmpInfo = GetBitmapInfo(newWidth, newHeight);
+			Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, &Buffer, NULL, 0);
+			OldBitmap = SelectObject(MemoryContext, Bitmap);
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
 	public: void Init(int width, int height, HWND windowHandle)
 	{
 		HDC deviceContext = GetDC(windowHandle);
 		MemoryContext = CreateCompatibleDC(deviceContext);
-
-		BmpInfo.bmiHeader.biSize = sizeof(BmpInfo);
-		BmpInfo.bmiHeader.biWidth = width;
-		BmpInfo.bmiHeader.biHeight = height;
-		BmpInfo.bmiHeader.biPlanes = 1;
-		BmpInfo.bmiHeader.biBitCount = 32;
-		BmpInfo.bmiHeader.biCompression = BI_RGB;
-		BmpInfo.bmiHeader.biSizeImage = ((width * (BmpInfo.bmiHeader.biBitCount / 8) + 3) & -4) * height;
-
+		BmpInfo = GetBitmapInfo(width, height);
 		Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, &Buffer, NULL, 0);
 		OldBitmap = SelectObject(MemoryContext, Bitmap);
 		ReleaseDC(windowHandle, deviceContext);
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: BITMAPINFO GetBitmapInfo(int width, int height)
+	{
+		BITMAPINFO bmpInfo;
+
+		bmpInfo.bmiHeader.biSize = sizeof(BmpInfo);
+		bmpInfo.bmiHeader.biWidth = width;
+		bmpInfo.bmiHeader.biHeight = height;
+		bmpInfo.bmiHeader.biPlanes = 1;
+		bmpInfo.bmiHeader.biBitCount = 32;
+		bmpInfo.bmiHeader.biCompression = BI_RGB;
+		bmpInfo.bmiHeader.biSizeImage = ((width * (bmpInfo.bmiHeader.biBitCount / 8) + 3) & -4) * height;
+
+		return bmpInfo;
 	}
 
 	//---------------------------------------------------------------------------------------------------------

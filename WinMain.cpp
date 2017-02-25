@@ -8,10 +8,13 @@
 
 //---------------------------------------------------------------------------------------------------------
 
-HWND WindowHandle;
-
 #define WIDTH 1024
-#define HEIGHT 784
+#define HEIGHT 768
+
+HWND WindowHandle;
+bool FullScreen = false;
+RECT OldWindowMode;
+bool QuitApplication = false;
 
 eVoWindowsFrameBuffer FrameBuffer;
 Application Demo;
@@ -36,11 +39,32 @@ void OnWMPaint(HWND windowHandle)
 	float frameTime = ((float)timeDifference) / (float)CLOCKS_PER_SEC;
 	int fps = 1.0f / frameTime;
 
-	std::string text = "FPS: " + std::to_string(fps);
+	std::string text = "FPS: " + std::to_string(fps) + " Res: " + std::to_string(FrameBuffer.GetWidth()) + "x" + std::to_string(FrameBuffer.GetHeight());
 	TextOut(deviceContext, 0, 0, text.c_str(), text.length());
 	ReleaseDC(windowHandle, deviceContext);
 
 	EndPaint(windowHandle, &ps);
+}
+
+//---------------------------------------------------------------------------------------------------------
+
+void ToggleFullScreen()
+{
+	if (FullScreen == false)
+	{
+		GetWindowRect(WindowHandle, &OldWindowMode);
+		SetWindowLongPtr(WindowHandle, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+		SetWindowPos(WindowHandle, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_SHOWWINDOW);
+	}
+	else
+	{
+		SetWindowLongPtr(WindowHandle, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
+		int width = OldWindowMode.right - OldWindowMode.left;
+		int height = OldWindowMode.bottom - OldWindowMode.top;
+		SetWindowPos(WindowHandle, HWND_TOP, OldWindowMode.left, OldWindowMode.top, width, height, SWP_SHOWWINDOW);
+	}
+
+	FullScreen = !FullScreen;
 }
 
 //---------------------------------------------------------------------------------------------------------
@@ -54,6 +78,7 @@ LONG WINAPI WindowProc(HWND windowHandle, UINT uMsg, WPARAM wParam, LPARAM lPara
 			return 0;
 
 		case WM_SIZE:
+			FrameBuffer.OnResize(lParam & 0xFFFF, (lParam >> 16) & 0xFFFF);
 			PostMessage(windowHandle, WM_PAINT, 0, 0);
 			return 0;
 
@@ -61,8 +86,12 @@ LONG WINAPI WindowProc(HWND windowHandle, UINT uMsg, WPARAM wParam, LPARAM lPara
 
 			if (wParam == 27) // ESC key
 			{
-				PostQuitMessage(0);
+				QuitApplication = true;
 				return 0;
+			}
+			else if (wParam == ' ')
+			{
+				ToggleFullScreen();
 			}
 			else
 			{
@@ -72,7 +101,7 @@ LONG WINAPI WindowProc(HWND windowHandle, UINT uMsg, WPARAM wParam, LPARAM lPara
 			break;
 
 		case WM_CLOSE:
-			PostQuitMessage(0);
+			QuitApplication = true;
 			return 0;
 	}
 
@@ -103,6 +132,7 @@ bool CreateAndRegisterWndClass(LPCSTR className, WNDPROC windowProc)
 	wndClass.hbrBackground = NULL;
 	wndClass.lpszMenuName = NULL;
 	wndClass.lpszClassName = className;
+	wndClass.style = CS_HREDRAW | CS_VREDRAW;
 
 	if (RegisterClass(&wndClass) == false)
 	{
@@ -120,7 +150,7 @@ bool CreateAndRegisterWndClass(LPCSTR className, WNDPROC windowProc)
 bool CreateAndShowWindow(int width, int height, const char* className, const char* title, int nCmdShow)
 {
 	HINSTANCE hInstance = GetModuleHandle(NULL);
-	WindowHandle = CreateWindow(className, title, WS_OVERLAPPEDWINDOW | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, 100, 100, width, height, NULL, NULL, hInstance, NULL);
+	WindowHandle = CreateWindow(className, title, WS_OVERLAPPEDWINDOW , 0, 0, width, height, NULL, NULL, hInstance, NULL);
 
 	if (WindowHandle == NULL)
 	{
@@ -198,11 +228,11 @@ int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpsz
 						DispatchMessage(&msg);
 					}
 
-					if (msg.message == WM_QUIT)
-						break;
-
 					Demo.MainLoopUpdate();
 					InvalidateRect(WindowHandle, NULL, false);
+
+					if (QuitApplication)
+						break;
 				}
 
 				// Release
