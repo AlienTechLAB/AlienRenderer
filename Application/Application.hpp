@@ -1,16 +1,19 @@
 #pragma once
 #include <time.h>
+#include "eVolution3D/eVoRenderer.hpp"
 
 class Application
 {
 	//---------------------------------------------------------------------------------------------------------
 
-	int pixel = 0;
+	private:
+	eVoRenderer* Rednerer = NULL;
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: void Start()
 	{
+		Rednerer = new eVoRenderer();
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -30,19 +33,25 @@ class Application
 
 	public: void UpdateFrameBuffer(eVoFrameBuffer* frameBuffer)
 	{
-		int pixelsNo = frameBuffer->GetBufferSizeInBytes() / 4;
-		unsigned int* pBuffer = (unsigned int*)frameBuffer->GetBuffer();
+		Rednerer->Render(frameBuffer);
+	}
 
-		for (int i = 0; i < pixelsNo; i++)
-		{
-			pBuffer[i] = pixel++;
-		}
+	//---------------------------------------------------------------------------------------------------------
+
+	public: ~Application()
+	{
+		Release();
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: void Release()
 	{
+		if (Rednerer != NULL)
+		{
+			delete Rednerer;
+			Rednerer = NULL;
+		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------

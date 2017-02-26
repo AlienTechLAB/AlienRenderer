@@ -8,7 +8,7 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	private:
 	BITMAPINFO BmpInfo;
-	void*      Buffer = NULL;
+	int*       Buffer = NULL;
 	HDC        MemoryContext;
 	HBITMAP    Bitmap;
 	HGDIOBJ    OldBitmap;
@@ -22,26 +22,28 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void OnResize(int newWidth, int newHeight)
+	public: void OnResize(int newWidth, int newHeight) override
 	{
 		if (Bitmap != NULL)
 		{
 			SelectObject(MemoryContext, OldBitmap);
 			DeleteObject(Bitmap);
 			BmpInfo = GetBitmapInfo(newWidth, newHeight);
-			Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, &Buffer, NULL, 0);
+			Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
 			OldBitmap = SelectObject(MemoryContext, Bitmap);
 		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void Init(int width, int height, HWND windowHandle)
+	public: void Init(HWND windowHandle)
 	{
+		RECT windowRect;
+		GetClientRect(windowHandle, &windowRect);
 		HDC deviceContext = GetDC(windowHandle);
 		MemoryContext = CreateCompatibleDC(deviceContext);
-		BmpInfo = GetBitmapInfo(width, height);
-		Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, &Buffer, NULL, 0);
+		BmpInfo = GetBitmapInfo(windowRect.right, windowRect.bottom);
+		Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
 		OldBitmap = SelectObject(MemoryContext, Bitmap);
 		ReleaseDC(windowHandle, deviceContext);
 	}
@@ -109,6 +111,13 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	//---------------------------------------------------------------------------------------------------------
 
+	public: int GetBufferSizeInPixels() override
+	{
+		return BmpInfo.bmiHeader.biSizeImage >> 2;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
 	public: void* GetBuffer() override
 	{
 		return Buffer;
@@ -119,6 +128,14 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 	public: HDC GetMemoryContext()
 	{
 		return MemoryContext;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	public: inline void PutPixel(int x, int y, int color) override
+	{
+		int address = (BmpInfo.bmiHeader.biWidth * (BmpInfo.bmiHeader.biHeight - 1 - y)) + x;
+		Buffer[address] = color;
 	}
 
 	//---------------------------------------------------------------------------------------------------------

@@ -37,10 +37,10 @@ void OnWMPaint(HWND windowHandle)
 	SetTextColor(deviceContext, 0x00FFFFFF);
 	long timeDifference = t2 - t1;
 	float frameTime = ((float)timeDifference) / (float)CLOCKS_PER_SEC;
-	int fps = 1.0f / frameTime;
+	int fps = (int)(1.0f / frameTime);
 
 	std::string text = "FPS: " + std::to_string(fps) + " Res: " + std::to_string(FrameBuffer.GetWidth()) + "x" + std::to_string(FrameBuffer.GetHeight());
-	TextOut(deviceContext, 0, 0, text.c_str(), text.length());
+	TextOut(deviceContext, 0, 0, text.c_str(), (int)text.length());
 	ReleaseDC(windowHandle, deviceContext);
 
 	EndPaint(windowHandle, &ps);
@@ -78,7 +78,9 @@ LONG WINAPI WindowProc(HWND windowHandle, UINT uMsg, WPARAM wParam, LPARAM lPara
 			return 0;
 
 		case WM_SIZE:
-			FrameBuffer.OnResize(lParam & 0xFFFF, (lParam >> 16) & 0xFFFF);
+			RECT windowRect;
+			GetClientRect(windowHandle, &windowRect);
+			FrameBuffer.OnResize(windowRect.right, windowRect.bottom);
 			PostMessage(windowHandle, WM_PAINT, 0, 0);
 			return 0;
 
@@ -95,7 +97,7 @@ LONG WINAPI WindowProc(HWND windowHandle, UINT uMsg, WPARAM wParam, LPARAM lPara
 			}
 			else
 			{
-				Demo.OnKeyPressed(wParam);
+				Demo.OnKeyPressed((char)wParam);
 			}
 
 			break;
@@ -215,7 +217,7 @@ int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpsz
 		{
 			if (DefinePixelFormat())
 			{
-				FrameBuffer.Init(WIDTH, HEIGHT, WindowHandle);
+				FrameBuffer.Init(WindowHandle);
 				Demo.Start();
 
 				// Main loop
