@@ -20,7 +20,7 @@ class eVoRenderer
 		int w = FrameBuffer->GetWidth();
 		int h = FrameBuffer->GetHeight();
 
-		DrawLine(700, 1200, 500, -100,EVOCOLOR_GREEN);
+		DrawLine(-100, 100, 100, 200, EVOCOLOR_GREEN);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ class eVoRenderer
 			buffer[i] = color;
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+	 //---------------------------------------------------------------------------------------------------------
 
 	private: void DrawLine(int x1, int y1, int x2, int y2, int color)
 	{
@@ -45,13 +45,13 @@ class eVoRenderer
 		if (y1 < 0 && y2 < 0)
 			return;
 
-		int w = FrameBuffer->GetWidth();
-		int h = FrameBuffer->GetHeight();
+		int r = FrameBuffer->GetWidth() - 1;
+		int t = FrameBuffer->GetHeight() - 1;
 
-		if (x1 >= w && x2 >= w)
+		if (x1 > r && x2 > r)
 			return;
 
-		if (y1 >= h && y2 >= h)
+		if (y1 > t && y2 > t)
 			return;
 
 
@@ -67,163 +67,115 @@ class eVoRenderer
 			else
 			{
 				// It's vertical line
-				if (y1 < 0)
-					y1 = 0;
-				else if (y1 >= h)
-					y1 = h - 1;
+				     if (y1 < 0) y1 = 0;
+				else if (y1 > t) y1 = t;
 
-				if (y2 < 0)
-					y2 = 0;
-				else if (y2 >= h)
-					y2 = h - 1;
+				     if (y2 < 0) y2 = 0;
+				else if (y2 > t) y2 = t;
+
+				DrawVerticalLine(x1, y1, y2, color);
+				return;
 			}
 		}
 		else if (y1 == y2)
 		{
 			// It's horizontal line
-			if (x1 < 0)
-				x1 = 0;
-			else if (x1 >= w)
-				x1 = w - 1;
+			     if (x1 < 0) x1 = 0;
+			else if (x1 > r) x1 = r;
 
-			if (x2 < 0)
-				x2 = 0;
-			else if (x2 >= w)
-				x2 = w - 1;
+			     if (x2 < 0) x2 = 0;
+			else if (x2 > r) x2 = r;
+
+			DrawHorizontalLine(x1, x2, y1, color);
 		}
 		else
 		{
-			// One vertex is out of the screen
-			if (x1 < 0 || x1 >= w || y1 < 0 || y1 >= h || x2 < 0 || x2 >= w || y2 < 0 || y2 >= h)
-			{
-				int dx = x2 - x1;
-				int dy = y2 - y1;
+			int dx = x2 - x1;
+			int dy = y2 - y1;
 
-				if (x1 < 0)
-				{
-					int new_y1 = (dy * -x1) / dx + y1;
+			// Math formulas for clipping line:
+			// y = (dy / dx) * (x - x1) + y1
+			// x = (y - y1) * (dx / dy) + x1
 
-					// Is line invisible ?
-					if (new_y1 < 0 || new_y1 >= h)
-						return;
-					else
-					{
-						x1 = 0;
-						y1 = new_y1;
-					}
-				}
-				else if (x1 >= w)
-				{
-					int new_y1 = (dy * (w - x1)) / dx + y1;
+			     if (x1 < 0) { y1 = (dy * -x1) / dx + y1; x1 = 0; }
+			else if (x1 > r) { y1 = (dy * (r - x1)) / dx + y1; x1 = r; }
 
-					// Is line invisible ?
-					if (new_y1 < 0 || new_y1 >= h)
-						return;
-					else
-					{
-						x1 = w - 1;
-						y1 = new_y1;
-					}
-				}
+			     if (y1 < 0) { x1 = (-y1 * dx) / dy + x1; y1 = 0; }
+			else if (y1 > t) { x1 = ((t - y1) * dx) / dy + x1; y1 = t; }
 
+			     if (x2 < 0) { y2 = (dy * -x1) / dx + y1; x2 = 0; }
+			else if (x2 > r) { y2 = (dy * (r - x1)) / dx + y1; x2 = r; }
 
+			     if (y2 < 0) { x2 = (-y1 * dx) / dy + x1; y2 = 0; }
+			else if (y2 > t) { x2 = ((t - y1) * dx) / dy + x1; y2 = t; }
 
-				if (x2 < 0)
-				{
-					int new_y2 = (dy * -x1) / dx + y1;
+			DrawDiagonalLine(x1, y1, x2, y2, color);
+			return;
+		}
+	}
 
-					// Is line invisible ?
-					if (new_y2 < 0 || new_y2 >= h)
-						return;
-					else
-					{
-						x2 = 0;
-						y2 = new_y2;
-					}
-				}
-				else if (x2 >= w)
-				{
-					int new_y2 = (dy * (w - x1)) / dx + y1;
+	//---------------------------------------------------------------------------------------------------------
 
-					// Is line invisible ?
-					if (new_y2 < 0 || new_y2 >= h)
-						return;
-					else
-					{
-						x2 = w - 1;
-						y2 = new_y2;
-					}
-				}
+	private: void DrawVerticalLine(int x, int y1, int y2, int color)
+	{
+		int yMin, yMax;
 
-
-
-				if (y1 < 0)
-				{
-					int new_x1 = (-y1 * dx) / dy + x1;
-
-					// Is line invisible ?
-					if (new_x1 < 0 || new_x1 >= w)
-						return;
-					else
-					{
-						x1 = new_x1;
-						y1 = 0;
-					}
-				}
-				else if (y1 >= h)
-				{
-					int new_x1 = ((h - y1) * dx) / dy + x1;
-
-					// Is line invisible ?
-					if (new_x1 < 0 || new_x1 >= w)
-						return;
-					else
-					{
-						x1 = new_x1;
-						y1 = h - 1;
-					}
-				}
-
-
-
-				if (y2 < 0)
-				{
-					int new_x2 = (-y1 * dx) / dy + x1;
-
-					// Is line invisible ?
-					if (new_x2 < 0 || new_x2 >= w)
-						return;
-					else
-					{
-						x2 = new_x2;
-						y2 = 0;
-					}
-				}
-				else if (y2 >= h)
-				{
-					int new_x2 = ((h - y1) * dx) / dy + x1;
-
-					// Is line invisible ?
-					if (new_x2 < 0 || new_x2 >= w)
-						return;
-					else
-					{
-						x2 = new_x2;
-						y2 = h - 1;
-					}
-				}
-			}
+		if (y2 > y1)
+		{
+			yMin = y1;
+			yMax = y2;
+		}
+		else
+		{
+			yMin = y2;
+			yMax = y1;
 		}
 
-		DrawDiagonalLine(x1, y1, x2, y2, color);
+		int screenWidth = FrameBuffer->GetWidth();
+		int* address = (int*)FrameBuffer->GetPixelAddress(x, yMin);
+
+		for (int y = yMin; y <= yMax; y++)
+		{
+			*address = color;
+			address += screenWidth;
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void DrawHorizontalLine(int x1, int x2, int y, int color)
+	{
+		int xMin, xMax;
+
+		if (x2 > x1)
+		{
+			xMin = x1;
+			xMax = x2;
+		}
+		else
+		{
+			xMin = x2;
+			xMax = x1;
+		}
+
+		int* address = (int*)FrameBuffer->GetPixelAddress(xMin, y);
+
+		for (int y = xMin; y <= xMax; y++)
+		{
+			*address = color;
+			address++;
+		}
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
 	private: void DrawDiagonalLine(int x1, int y1, int x2, int y2, int color)
 	{
+		int* address = (int*)FrameBuffer->GetPixelAddress(x1, y1);
+		int screenWidth = FrameBuffer->GetWidth();
+
 		// Bresenham's line algorithm
-		FrameBuffer->PutPixel(x1, y1, color);
+		*address = color;
 
 		int dx = x2 - x1;
 		int dy = y2 - y1;
@@ -231,7 +183,7 @@ class eVoRenderer
 		int height = abs(dy);
 
 		int moveForwardAndUpX = (dx > 0) - (dx < 0);
-		int moveForwardAndUpY = (dy > 0) - (dy < 0);
+		int moveForwardAndUpY = ((dy > 0) - (dy < 0)) * screenWidth;
 
 
 		int moveForwardX = moveForwardAndUpX;
@@ -249,74 +201,21 @@ class eVoRenderer
 
 		for (int i = 0; i < width; i++)
 		{
-			FrameBuffer->PutPixel(x1, y1, color);
+			*address = color;
 			threshold += height;
 
 			if (width <= threshold)
 			{
 				threshold -= width;
-				x1 += moveForwardAndUpX;
-				y1 += moveForwardAndUpY;
+				address += moveForwardAndUpX;
+				address += moveForwardAndUpY;
 			}
 			else
 			{
-				x1 = x1 + moveForwardX;
-				y1 = y1 + moveForwardY;
+				address += moveForwardX;
+				address += moveForwardY;
 			}
 		}
-	}
-
-	//---------------------------------------------------------------------------------------------------------
-
-	private: bool ClipLine(int& x1, int& y1, int& x2, int& y2)
-	{
-		if (IsVertexOnScreen(x1, y1) && IsVertexOnScreen(x2, y2))
-			return true;
-
-		if (IsLineForSureOutOfScreen(x1, y1, x2, y2))
-			return false;
-
-		if (PrependicularClipping(x1, y1, x2, y2))
-			return true;
-
-
-
-		return false;
-	}
-
-	//---------------------------------------------------------------------------------------------------------
-
-	private: inline bool IsVertexOnScreen(int x, int y)
-	{
-		return ((x >= 0 && x <= FrameBuffer->GetWidth()) && (y >= 0 && y <= FrameBuffer->GetHeight()));
-	}
-
-	 //---------------------------------------------------------------------------------------------------------
-
-	private: inline bool IsLineForSureOutOfScreen(int x1, int y1, int x2, int y2)
-	{
-		if (x1 < 0 && x2 < 0)
-			return true;
-
-		if (x1 > FrameBuffer->GetWidth() && x2 > FrameBuffer->GetWidth())
-			return true;
-
-		if (y1 < 0 && y2 < 0)
-			return true;
-
-		if (y1 > FrameBuffer->GetHeight() && y2 > FrameBuffer->GetHeight())
-			return true;
-
-		return false;
-	}
-
-	//---------------------------------------------------------------------------------------------------------
-
-	private: inline bool PrependicularClipping(int& x1, int& y1, int& x2, int& y2)
-	{
-
-
-		return false;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
