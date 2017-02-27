@@ -40,7 +40,7 @@ void OnWMPaint(HWND windowHandle)
 	int fps = (int)(1.0f / frameTime);
 
 	std::string text = "FPS: " + std::to_string(fps) + " Res: " + std::to_string(FrameBuffer.GetWidth()) + "x" + std::to_string(FrameBuffer.GetHeight());
-	TextOut(deviceContext, 0, 0, text.c_str(), (int)text.length());
+	//TextOut(deviceContext, 0, 0, text.c_str(), (int)text.length());
 	ReleaseDC(windowHandle, deviceContext);
 
 	EndPaint(windowHandle, &ps);

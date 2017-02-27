@@ -90,35 +90,35 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: int GetWidth() override
+	public: inline int GetWidth() override
 	{
 		return BmpInfo.bmiHeader.biWidth;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: int GetHeight() override
+	public: inline int GetHeight() override
 	{
 		return BmpInfo.bmiHeader.biHeight;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: int GetBufferSizeInBytes() override
+	public: inline int GetBufferSizeInBytes() override
 	{
 		return BmpInfo.bmiHeader.biSizeImage;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: int GetBufferSizeInPixels() override
+	public: inline int GetBufferSizeInPixels() override
 	{
 		return BmpInfo.bmiHeader.biSizeImage >> 2;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void* GetBuffer() override
+	public: inline void* GetBuffer() override
 	{
 		return Buffer;
 	}
@@ -134,8 +134,15 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	public: inline void PutPixel(int x, int y, int color) override
 	{
-		int address = (BmpInfo.bmiHeader.biWidth * (BmpInfo.bmiHeader.biHeight - 1 - y)) + x;
-		Buffer[address] = color;
+		int* address = (int*)GetPixelAddress(x, y);
+		*address = color;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	public: inline void* GetPixelAddress(int x, int y) override
+	{
+		return &Buffer[(BmpInfo.bmiHeader.biWidth * y) + x];
 	}
 
 	//---------------------------------------------------------------------------------------------------------
