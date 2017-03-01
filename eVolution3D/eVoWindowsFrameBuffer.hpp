@@ -8,7 +8,7 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	private:
 	BITMAPINFO   BmpInfo;
-	eVoColorI32* Buffer = NULL;
+	eVoColor32* Buffer = NULL;
 	HDC          MemoryContext;
 	HBITMAP      Bitmap;
 	HGDIOBJ      OldBitmap;
@@ -118,7 +118,7 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: inline eVoColorI32* GetBuffer() override
+	public: inline eVoColor32* GetBuffer() override
 	{
 		return Buffer;
 	}
@@ -132,15 +132,15 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: inline void PutPixel(int x, int y, eVoColorI32 color) override
+	public: inline void PutPixel(int x, int y, eVoColor32 color) override
 	{
-		eVoColorI32* address = GetPixelAddress(x, y);
+		eVoColor32* address = GetPixelAddress(x, y);
 		*address = color;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: inline eVoColorI32* GetPixelAddress(int x, int y) override
+	public: inline eVoColor32* GetPixelAddress(int x, int y) override
 	{
 		return &Buffer[(BmpInfo.bmiHeader.biWidth * y) + x];
 	}

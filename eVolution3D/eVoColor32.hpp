@@ -1,6 +1,6 @@
 #pragma once
 
-struct eVoColorI32
+struct eVoColor32
 {
 	//---------------------------------------------------------------------------------------------------------
 
@@ -19,14 +19,14 @@ struct eVoColorI32
 
 	//---------------------------------------------------------------------------------------------------------
 
-	eVoColorI32(int color32)
+	eVoColor32(int color32)
 	{
 		Color32 = color32;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	eVoColorI32(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+	eVoColor32(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
 	{
 		R = r;
 		G = g;
@@ -36,19 +36,19 @@ struct eVoColorI32
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: static const eVoColorI32 Black;
-	public: static const eVoColorI32 White;
-	public: static const eVoColorI32 Red;
-	public: static const eVoColorI32 Green;
-	public: static const eVoColorI32 Blue;
-	public: static const eVoColorI32 Yellow;
+	public: static const eVoColor32 Black;
+	public: static const eVoColor32 White;
+	public: static const eVoColor32 Red;
+	public: static const eVoColor32 Green;
+	public: static const eVoColor32 Blue;
+	public: static const eVoColor32 Yellow;
 
 	//---------------------------------------------------------------------------------------------------------
 };
 
-const eVoColorI32 eVoColorI32::Black  = 0x00000000;
-const eVoColorI32 eVoColorI32::White  = 0x00FFFFFF;
-const eVoColorI32 eVoColorI32::Red    = 0x00FF0000;
-const eVoColorI32 eVoColorI32::Green  = 0x0000FF00;
-const eVoColorI32 eVoColorI32::Blue   = 0x000000FF;
-const eVoColorI32 eVoColorI32::Yellow = 0x000000FF;
+const eVoColor32 eVoColor32::Black  = 0x00000000;
+const eVoColor32 eVoColor32::White  = 0x00FFFFFF;
+const eVoColor32 eVoColor32::Red    = 0x00FF0000;
+const eVoColor32 eVoColor32::Green  = 0x0000FF00;
+const eVoColor32 eVoColor32::Blue   = 0x000000FF;
+const eVoColor32 eVoColor32::Yellow = 0x000000FF;

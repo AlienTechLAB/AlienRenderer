@@ -2,7 +2,7 @@
 #include <math.h>
 #include "eVolution3D/eVoFrameBuffer.h"
 #include "eVolution3D/eVoConstants.h"
-#include "eVolution3D/eVoColorI32.hpp"
+#include "eVolution3D/eVoColor32.hpp"
 
 class eVoRenderer
 {
@@ -16,20 +16,20 @@ class eVoRenderer
 	public: void Render(eVoFrameBuffer* frameBuffer)
 	{
 		FrameBuffer = frameBuffer;
-		ClearBufferWithColor(eVoColorI32::Black);
+		ClearBufferWithColor(eVoColor32::Black);
 
 		int w = FrameBuffer->GetWidth();
 		int h = FrameBuffer->GetHeight();
 
-		DrawLine(-100, 100, 100, 200, eVoColorI32::Green);
+		DrawLine(-100, 100, 100, 200, eVoColor32::Green);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void ClearBufferWithColor(eVoColorI32 color)
+	private: void ClearBufferWithColor(eVoColor32 color)
 	{
 		int bufferSize = FrameBuffer->GetBufferSizeInPixels();
-		eVoColorI32* buffer = (eVoColorI32*)FrameBuffer->GetBuffer();
+		eVoColor32* buffer = (eVoColor32*)FrameBuffer->GetBuffer();
 
 		for (int i = 0; i < bufferSize; i++)
 			buffer[i] = color;
@@ -37,7 +37,7 @@ class eVoRenderer
 
 	 //---------------------------------------------------------------------------------------------------------
 
-	private: void DrawLine(int x1, int y1, int x2, int y2, eVoColorI32 color)
+	private: void DrawLine(int x1, int y1, int x2, int y2, eVoColor32 color)
 	{
 		// Check if whole line is out of the screen
 		if (x1 < 0 && x2 < 0)
@@ -117,7 +117,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawVerticalLine(int x, int y1, int y2, eVoColorI32 color)
+	private: void DrawVerticalLine(int x, int y1, int y2, eVoColor32 color)
 	{
 		int yMin, yMax;
 
@@ -133,7 +133,7 @@ class eVoRenderer
 		}
 
 		int screenWidth = FrameBuffer->GetWidth();
-		eVoColorI32* address = FrameBuffer->GetPixelAddress(x, yMin);
+		eVoColor32* address = FrameBuffer->GetPixelAddress(x, yMin);
 
 		for (int y = yMin; y <= yMax; y++)
 		{
@@ -144,7 +144,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawHorizontalLine(int x1, int x2, int y, eVoColorI32 color)
+	private: void DrawHorizontalLine(int x1, int x2, int y, eVoColor32 color)
 	{
 		int xMin, xMax;
 
@@ -159,7 +159,7 @@ class eVoRenderer
 			xMax = x1;
 		}
 
-		eVoColorI32* address = FrameBuffer->GetPixelAddress(xMin, y);
+		eVoColor32* address = FrameBuffer->GetPixelAddress(xMin, y);
 
 		for (int y = xMin; y <= xMax; y++)
 		{
@@ -170,9 +170,9 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawDiagonalLine(int x1, int y1, int x2, int y2, eVoColorI32 color)
+	private: void DrawDiagonalLine(int x1, int y1, int x2, int y2, eVoColor32 color)
 	{
-		eVoColorI32* address = FrameBuffer->GetPixelAddress(x1, y1);
+		eVoColor32* address = FrameBuffer->GetPixelAddress(x1, y1);
 		int screenWidth = FrameBuffer->GetWidth();
 
 		// Bresenham's line algorithm
