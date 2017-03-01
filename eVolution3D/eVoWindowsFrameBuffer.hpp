@@ -2,16 +2,16 @@
 #include <windows.h>
 #include "eVoFrameBuffer.h"
 
-class eVoWindowsFrameBuffer : public eVoFrameBuffer
+template <typename PixelType> class eVoWindowsFrameBuffer : public eVoFrameBuffer<PixelType>
 {
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	BITMAPINFO   BmpInfo;
-	eVoColor32* Buffer = NULL;
-	HDC          MemoryContext;
-	HBITMAP      Bitmap;
-	HGDIOBJ      OldBitmap;
+	BITMAPINFO BmpInfo;
+	PixelType* Buffer = NULL;
+	HDC MemoryContext;
+	HBITMAP Bitmap;
+	HGDIOBJ OldBitmap;
 
 	//---------------------------------------------------------------------------------------------------------
 
@@ -132,15 +132,15 @@ class eVoWindowsFrameBuffer : public eVoFrameBuffer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: inline void PutPixel(int x, int y, eVoColor32 color) override
+	public: inline void PutPixel(int x, int y, PixelType color) override
 	{
-		eVoColor32* address = GetPixelAddress(x, y);
+		PixelType* address = GetPixelAddress(x, y);
 		*address = color;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: inline eVoColor32* GetPixelAddress(int x, int y) override
+	public: inline PixelType* GetPixelAddress(int x, int y) override
 	{
 		return &Buffer[(BmpInfo.bmiHeader.biWidth * y) + x];
 	}

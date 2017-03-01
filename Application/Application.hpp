@@ -31,7 +31,7 @@ class Application
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void UpdateFrameBuffer(eVoFrameBuffer* frameBuffer)
+	public: void UpdateFrameBuffer(eVoFrameBuffer<eVoColor32>* frameBuffer)
 	{
 		Rednerer->Render(frameBuffer);
 	}

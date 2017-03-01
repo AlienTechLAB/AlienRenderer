@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include "eVolution3D/eVoColor32.hpp"
 #include "eVolution3D/eVoWindowsFrameBuffer.hpp"
 #include "Application/Application.hpp"
 
@@ -16,7 +17,7 @@ bool FullScreen = false;
 RECT OldWindowMode;
 bool QuitApplication = false;
 
-eVoWindowsFrameBuffer FrameBuffer;
+eVoWindowsFrameBuffer<eVoColor32> FrameBuffer;
 Application Demo;
 
 //---------------------------------------------------------------------------------------------------------

@@ -9,11 +9,11 @@ class eVoRenderer
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	eVoFrameBuffer* FrameBuffer = NULL;
+	eVoFrameBuffer<eVoColor32>* FrameBuffer = NULL;
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void Render(eVoFrameBuffer* frameBuffer)
+	public: void Render(eVoFrameBuffer<eVoColor32>* frameBuffer)
 	{
 		FrameBuffer = frameBuffer;
 		ClearBufferWithColor(eVoColor32::Black);
