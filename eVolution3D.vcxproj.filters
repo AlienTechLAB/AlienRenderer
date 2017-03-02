@@ -38,6 +38,18 @@
     <ClInclude Include="eVolution3D\eVoColor32.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="eVolution3D\eVoException.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\eVoMath.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\eVoEnums.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\eVoVector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="eVolution3D\TODO.txt" />

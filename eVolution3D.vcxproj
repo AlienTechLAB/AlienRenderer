@@ -117,7 +117,11 @@
     <ClInclude Include="Application\Application.hpp" />
     <ClInclude Include="eVolution3D\eVoColor32.hpp" />
     <ClInclude Include="eVolution3D\eVoConstants.h" />
+    <ClInclude Include="eVolution3D\eVoEnums.h" />
+    <ClInclude Include="eVolution3D\eVoException.hpp" />
     <ClInclude Include="eVolution3D\eVoFrameBuffer.h" />
+    <ClInclude Include="eVolution3D\eVoMath.hpp" />
+    <ClInclude Include="eVolution3D\eVoVector3.h" />
     <ClInclude Include="eVolution3D\eVoRenderer.hpp" />
     <ClInclude Include="eVolution3D\eVoWindowsFrameBuffer.hpp" />
   </ItemGroup>
