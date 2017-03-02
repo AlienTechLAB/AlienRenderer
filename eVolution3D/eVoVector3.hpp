@@ -148,7 +148,7 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	void Rotate(float angle, enum eVoAxis axis)
+	public: void Rotate(float angle, eVoAxis axis)
 	{
 		float c;
 
@@ -179,21 +179,21 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	void Zero()
+	public: void Zero()
 	{
 		x = y = z = 0.0f;
 	}
 	
 	//---------------------------------------------------------------------------------------------------------
 
-	void One()
+	public: void One()
 	{
 		x = y = z = 1.0f;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	void SetCoords(float newX, float newY, float newZ)
+	public: void SetCoords(float newX, float newY, float newZ)
 	{
 		x = newX;
 		y = newY;
@@ -202,7 +202,7 @@ struct eVoVector3
 	
 	//---------------------------------------------------------------------------------------------------------
 
-	float Magnitude()
+	public: float Magnitude()
 	{
 		return eVoInvSqrt(x*x + y*y + z*z);
 	}

@@ -47,7 +47,7 @@
     <ClInclude Include="eVolution3D\eVoEnums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="eVolution3D\eVoVector3.h">
+    <ClInclude Include="eVolution3D\eVoVector3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

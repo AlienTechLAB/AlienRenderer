@@ -121,7 +121,7 @@
     <ClInclude Include="eVolution3D\eVoException.hpp" />
     <ClInclude Include="eVolution3D\eVoFrameBuffer.h" />
     <ClInclude Include="eVolution3D\eVoMath.hpp" />
-    <ClInclude Include="eVolution3D\eVoVector3.h" />
+    <ClInclude Include="eVolution3D\eVoVector3.hpp" />
     <ClInclude Include="eVolution3D\eVoRenderer.hpp" />
     <ClInclude Include="eVolution3D\eVoWindowsFrameBuffer.hpp" />
   </ItemGroup>
