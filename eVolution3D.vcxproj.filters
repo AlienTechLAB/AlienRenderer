@@ -50,6 +50,9 @@
     <ClInclude Include="eVolution3D\eVoVector3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="eVolution3D\eVoVertexShader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="eVolution3D\TODO.txt" />

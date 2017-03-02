@@ -28,7 +28,7 @@ void OnWMPaint(HWND windowHandle)
 	BeginPaint(windowHandle, &ps);
 
 	clock_t t1 = clock();
-	Demo.UpdateFrameBuffer(&FrameBuffer);
+	Demo.UpdateFrameBuffer();
 	clock_t t2 = clock();
 
 	HDC deviceContext = GetDC(windowHandle);
@@ -219,6 +219,7 @@ int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpsz
 			if (DefinePixelFormat())
 			{
 				FrameBuffer.Init(WindowHandle);
+				Demo.SetFrameBuffer(&FrameBuffer);
 				Demo.Start();
 
 				// Main loop

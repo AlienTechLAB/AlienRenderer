@@ -3,6 +3,8 @@
 #include "eVolution3D/eVoFrameBuffer.h"
 #include "eVolution3D/eVoConstants.h"
 #include "eVolution3D/eVoColor32.hpp"
+#include "eVolution3D/eVoVector3.hpp"
+#include "eVolution3D/eVoVertexShader.hpp"
 
 class eVoRenderer
 {
@@ -10,23 +12,51 @@ class eVoRenderer
 
 	private:
 	eVoFrameBuffer<eVoColor32>* FrameBuffer = NULL;
+	eVoVector3* Vertices = NULL;
+	int VerticesNo = 0;
+	eVoDrawingMode DrawingMode = eVoDrawingMode::POINT;
+	eVoVertexShader* VertexShader = NULL;
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void Render(eVoFrameBuffer<eVoColor32>* frameBuffer)
+	public: eVoRenderer()
 	{
-		FrameBuffer = frameBuffer;
-		ClearBufferWithColor(eVoColor32::Black);
-
-		int w = FrameBuffer->GetWidth();
-		int h = FrameBuffer->GetHeight();
-
-		DrawLine(-100, 100, 100, 200, eVoColor32::Green);
+		VertexShader = new eVoVertexShader();
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void ClearBufferWithColor(eVoColor32 color)
+	public: ~eVoRenderer()
+	{
+		if (VertexShader != NULL)
+			delete VertexShader;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	public: void SetTargetBuffer(eVoFrameBuffer<eVoColor32>* frameBuffer)
+	{
+		FrameBuffer = frameBuffer;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	public: void SetVertices(eVoVector3* vertices, int verticesNo)
+	{
+		Vertices = vertices;
+		VerticesNo = verticesNo;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	public: void SetDrawingMode(eVoDrawingMode drawingMode)
+	{
+		DrawingMode = drawingMode;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	public: void ClearBufferWithColor(eVoColor32 color)
 	{
 		int bufferSize = FrameBuffer->GetBufferSizeInPixels();
 		eVoColor32* buffer = (eVoColor32*)FrameBuffer->GetBuffer();
@@ -35,10 +65,186 @@ class eVoRenderer
 			buffer[i] = color;
 	}
 
+	//---------------------------------------------------------------------------------------------------------
+
+	public: void Render()
+	{
+		switch (DrawingMode)
+		{
+			case eVoDrawingMode::POINT: RenderPoints(); break;
+			case eVoDrawingMode::LINE: RenderLines(); break;
+			case eVoDrawingMode::LINE_STRIP: RenderLineStrip(); break;
+			case eVoDrawingMode::LINE_LOOP: RenderLineLoop(); break;
+			case eVoDrawingMode::WIRE_TRIANGLES: RenderWireTriangles(); break;
+			case eVoDrawingMode::TRIANGLE_STRIP: RenderWireTriangleStrip(); break;
+			case eVoDrawingMode::TRIANGLE_FAN: RenderWireTriangleFan(); break;
+			default: throw eVoException("Unknown DrawingMode");
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void RenderPoints()
+	{
+		eVoVector3 vertex;
+
+		for (int i = 0; i < VerticesNo; i ++)
+		{
+			VertexShader->ProcessVertex(&Vertices[i], &vertex);
+			DrawPoint(&vertex, eVoColor32::Green);
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void RenderLines()
+	{
+		eVoVector3 vertices[2];
+		int index = 0;
+		int linesNo = VerticesNo >> 1;
+
+		for (int i = 0; i < linesNo; i++)
+		{
+			VertexShader->ProcessVertex(&Vertices[index++], &vertices[0]);
+			VertexShader->ProcessVertex(&Vertices[index++], &vertices[1]);
+			DrawLine(&vertices[0], &vertices[1], eVoColor32::Green);
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void RenderLineStrip()
+	{
+		eVoVector3 vertices[2];
+		int linesNo = VerticesNo - 1;
+
+		if (linesNo > 0)
+		{
+			VertexShader->ProcessVertex(&Vertices[0], &vertices[0]);
+
+			for (int i = 1; i < VerticesNo; i++)
+			{
+				VertexShader->ProcessVertex(&Vertices[i], &vertices[1]);
+				DrawLine(&vertices[0], &vertices[1], eVoColor32::Green);
+				vertices[0] = vertices[1];
+			}
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void RenderLineLoop()
+	{
+		eVoVector3 vertices[2];
+		
+		if (VerticesNo > 2)
+		{
+			for (int i = 0; i < VerticesNo; i++)
+			{
+				VertexShader->ProcessVertex(&Vertices[i], &vertices[0]);
+				VertexShader->ProcessVertex(&Vertices[(i + 1) % VerticesNo], &vertices[1]);
+				DrawLine(&vertices[0], &vertices[1], eVoColor32::Green);
+			}
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void RenderWireTriangles()
+	{
+		eVoVector3 vertices[3];
+		int trianglesNo = VerticesNo / 3;
+
+		if (trianglesNo > 0)
+		{
+			int index = 0;
+
+			for (int i = 0; i < trianglesNo; i++)
+			{
+				VertexShader->ProcessVertex(&Vertices[index++], &vertices[0]);
+				VertexShader->ProcessVertex(&Vertices[index++], &vertices[1]);
+				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2]);
+				DrawWireTriangle(&vertices[0], eVoColor32::Green);
+			}
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void RenderWireTriangleStrip()
+	{
+		eVoVector3 vertices[3];
+		int index = 2;
+		int trianglesNo = VerticesNo - 2;
+
+		if (trianglesNo > 0)
+		{
+			VertexShader->ProcessVertex(&Vertices[0], &vertices[0]);
+			VertexShader->ProcessVertex(&Vertices[1], &vertices[1]);
+
+			for (int i = 0; i < trianglesNo; i++)
+			{
+				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2]);
+				DrawWireTriangle(&vertices[0], eVoColor32::Green);
+
+				if (i & 1)
+					vertices[0] = vertices[2];
+				else
+					vertices[1] = vertices[2];
+			}
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void RenderWireTriangleFan()
+	{
+		eVoVector3 vertices[3];
+		int index = 2;
+		int trianglesNo = VerticesNo - 2;
+
+		if (trianglesNo > 0)
+		{
+			VertexShader->ProcessVertex(&Vertices[0], &vertices[0]);
+			VertexShader->ProcessVertex(&Vertices[1], &vertices[1]);
+
+			for (int i = 0; i < trianglesNo; i++)
+			{
+				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2]);
+				DrawWireTriangle(&vertices[0], eVoColor32::Green);
+				vertices[1] = vertices[2];
+			}
+		}
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void DrawPoint(eVoVector3* vertices, eVoColor32 color)
+	{
+		int x = vertices[0].x;
+		int y = vertices[0].y;
+		eVoColor32* address = FrameBuffer->GetPixelAddress(x, y);
+		*address = color;
+	}
+
 	 //---------------------------------------------------------------------------------------------------------
 
-	private: void DrawLine(int x1, int y1, int x2, int y2, eVoColor32 color)
+	private: void DrawWireTriangle(eVoVector3* vertices, eVoColor32 color)
 	{
+		DrawLine(&vertices[0], &vertices[1], color);
+		DrawLine(&vertices[1], &vertices[2], color);
+		DrawLine(&vertices[2], &vertices[0], color);
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	private: void DrawLine(eVoVector3* vertex1, eVoVector3* vertex2, eVoColor32 color)
+	{
+		int x1 = vertex1->x;
+		int y1 = vertex1->y;
+		int x2 = vertex2->x;
+		int y2 = vertex2->y;
+
 		// Check if whole line is out of the screen
 		if (x1 < 0 && x2 < 0)
 			return;
