@@ -1,13 +1,26 @@
 #pragma once
 #include "eVoVector3.hpp"
+#include "eVoShaderIOData.h"
 
 class eVoVertexShader
 {
 	//---------------------------------------------------------------------------------------------------------
-
-	public: virtual void ProcessVertex(eVoVector3* srcVertex, eVoVector3* dstVertex)
+	
+	public: virtual void ProcessVertex(eVoVector3* vetrexIn, eVoVector3* vertexOut, eVoShaderIOData& shaderIOData)
 	{
-		*dstVertex = *srcVertex;
+		*vertexOut = *vetrexIn;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+};
+
+class eVoVertexShaderMVP : public eVoVertexShader
+{
+	//---------------------------------------------------------------------------------------------------------
+
+	public: void ProcessVertex(eVoVector3* vetrexIn, eVoVector3* vertexOut, eVoShaderIOData& shaderIOData) override
+	{
+		*vertexOut = shaderIOData.MVP * (*vetrexIn);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
