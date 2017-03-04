@@ -10,7 +10,7 @@ class Application
 	private:
 	eVoFrameBuffer<eVoColor32>* FrameBuffer = NULL;
 	eVoRenderer* Rednerer = NULL;
-	eVoVector3* Vertices = NULL;
+	eVoVector3*  Vertices = NULL;
 
 	//---------------------------------------------------------------------------------------------------------
 
