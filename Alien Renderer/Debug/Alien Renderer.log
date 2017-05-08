@@ -1,1 +1,9 @@
-﻿
+﻿  WinMain.cpp
+e:\alien techlab\graphics3d\alienrenderer\alien renderer\evolution3d\evorenderer.hpp(228): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\alien techlab\graphics3d\alienrenderer\alien renderer\evolution3d\evorenderer.hpp(229): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\alien techlab\graphics3d\alienrenderer\alien renderer\evolution3d\evorenderer.hpp(247): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\alien techlab\graphics3d\alienrenderer\alien renderer\evolution3d\evorenderer.hpp(248): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\alien techlab\graphics3d\alienrenderer\alien renderer\evolution3d\evorenderer.hpp(249): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+e:\alien techlab\graphics3d\alienrenderer\alien renderer\evolution3d\evorenderer.hpp(250): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Alien Renderer.vcxproj -> E:\Alien TechLAB\Graphics3D\AlienRenderer\Debug\Alien Renderer.exe
+  Alien Renderer.vcxproj -> E:\Alien TechLAB\Graphics3D\AlienRenderer\Debug\Alien Renderer.pdb (Partial PDB)
