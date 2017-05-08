@@ -244,10 +244,10 @@ class eVoRenderer
 
 	private: void DrawLine(eVoVector3* vertex1, eVoVector3* vertex2, eVoColor32 color)
 	{
-		int x1 = vertex1->x;
-		int y1 = vertex1->y;
-		int x2 = vertex2->x;
-		int y2 = vertex2->y;
+		int x1 = vertex1->x + 0.5f;
+		int y1 = vertex1->y + 0.5f;
+		int x2 = vertex2->x + 0.5f;
+		int y2 = vertex2->y + 0.5f;
 
 		// Check if whole line is out of the screen
 		if (x1 < 0 && x2 < 0)
