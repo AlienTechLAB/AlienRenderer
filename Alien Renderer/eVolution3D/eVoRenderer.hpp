@@ -314,11 +314,19 @@ class eVoRenderer
 			     if (y1 < 0) { x1 = (-y1 * dx) / dy + x1; y1 = 0; }
 			else if (y1 > t) { x1 = ((t - y1) * dx) / dy + x1; y1 = t; }
 
+			if (x1 < 0 || x1 > r || y1 < 0 || y1 > t)
+				return;
+
+
 			     if (x2 < 0) { y2 = (dy * -x1) / dx + y1; x2 = 0; }
 			else if (x2 > r) { y2 = (dy * (r - x1)) / dx + y1; x2 = r; }
 
 			     if (y2 < 0) { x2 = (-y1 * dx) / dy + x1; y2 = 0; }
 			else if (y2 > t) { x2 = ((t - y1) * dx) / dy + x1; y2 = t; }
+
+			if (x2 < 0 || x2 > r || y2 < 0 || y2 > t)
+				return;
+
 
 			DrawDiagonalLine(x1, y1, x2, y2, color);
 			return;
