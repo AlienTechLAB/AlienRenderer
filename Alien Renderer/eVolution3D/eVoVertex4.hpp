@@ -5,7 +5,7 @@
 #include "eVoEnums.h"
 #include "eVoVector4.hpp"
 
-struct eVoPoint4
+struct eVoVertex4
 {
 	//---------------------------------------------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ struct eVoPoint4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoPoint4()
+	public: eVoVertex4()
 	{
 		x = y = z = 0;
 		w = 1;
@@ -22,7 +22,7 @@ struct eVoPoint4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoPoint4(float ax, float ay, float az)
+	public: eVoVertex4(float ax, float ay, float az)
 	{
 		x = ax;
 		y = ay;
@@ -32,7 +32,7 @@ struct eVoPoint4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoPoint4 operator=(eVoPoint4& point)
+	public: eVoVertex4 operator=(eVoVertex4& point)
 	{
 		x = point.x;
 		y = point.y;
@@ -43,14 +43,14 @@ struct eVoPoint4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator-(eVoPoint4& point)
+	public: eVoVector4 operator-(eVoVertex4& point)
 	{
 		return eVoVector4(x - point.x, y - point.y, z - point.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator==(eVoPoint4& point)
+	public: bool operator==(eVoVertex4& point)
 	{
 		if (x != point.x) return false;
 		else if (y != point.y) return false;
@@ -61,7 +61,7 @@ struct eVoPoint4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator!=(eVoPoint4& point)
+	public: bool operator!=(eVoVertex4& point)
 	{
 		if (x != point.x) return true;
 		else if (y != point.y) return true;

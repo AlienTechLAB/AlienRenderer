@@ -3,7 +3,7 @@
 #include "eVolution3D/eVoFrameBuffer.h"
 #include "eVolution3D/eVoConstants.h"
 #include "eVolution3D/eVoColor32.hpp"
-#include "eVolution3D/eVoVector3.hpp"
+#include "eVolution3D/eVoVertex3.hpp"
 #include "eVolution3D/eVoVertexShader.hpp"
 #include "eVoShaderIOData.h"
 
@@ -13,7 +13,7 @@ class eVoRenderer
 
 	private:
 	eVoFrameBuffer<eVoColor32>* FrameBuffer = NULL;
-	eVoVector3* Vertices = NULL;
+	eVoVertex3* Vertices = NULL;
 	int VerticesNo = 0;
 	eVoDrawingMode DrawingMode = eVoDrawingMode::POINT;
 	eVoVertexShader* VertexShader = NULL;
@@ -28,7 +28,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetVertices(eVoVector3* vertices, int verticesNo)
+	public: void SetVertices(eVoVertex3* vertices, int verticesNo)
 	{
 		Vertices = vertices;
 		VerticesNo = verticesNo;
@@ -90,7 +90,7 @@ class eVoRenderer
 
 	private: void RenderPoints()
 	{
-		eVoVector3 vertex;
+		eVoVertex3 vertex;
 
 		for (int i = 0; i < VerticesNo; i ++)
 		{
@@ -103,7 +103,7 @@ class eVoRenderer
 
 	private: void RenderLines()
 	{
-		eVoVector3 vertices[2];
+		eVoVertex3 vertices[2];
 		int index = 0;
 		int linesNo = VerticesNo >> 1;
 
@@ -119,7 +119,7 @@ class eVoRenderer
 
 	private: void RenderLineStrip()
 	{
-		eVoVector3 vertices[2];
+		eVoVertex3 vertices[2];
 		int linesNo = VerticesNo - 1;
 
 		if (linesNo > 0)
@@ -139,7 +139,7 @@ class eVoRenderer
 
 	private: void RenderLineLoop()
 	{
-		eVoVector3 vertices[2];
+		eVoVertex3 vertices[2];
 		
 		if (VerticesNo > 2)
 		{
@@ -156,7 +156,7 @@ class eVoRenderer
 
 	private: void RenderWireTriangles()
 	{
-		eVoVector3 vertices[3];
+		eVoVertex3 vertices[3];
 		int trianglesNo = VerticesNo / 3;
 
 		if (trianglesNo > 0)
@@ -177,7 +177,7 @@ class eVoRenderer
 
 	private: void RenderWireTriangleStrip()
 	{
-		eVoVector3 vertices[3];
+		eVoVertex3 vertices[3];
 		int index = 2;
 		int trianglesNo = VerticesNo - 2;
 
@@ -203,7 +203,7 @@ class eVoRenderer
 
 	private: void RenderWireTriangleFan()
 	{
-		eVoVector3 vertices[3];
+		eVoVertex3 vertices[3];
 		int index = 2;
 		int trianglesNo = VerticesNo - 2;
 
@@ -223,7 +223,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawPoint(eVoVector3* vertices, eVoColor32 color)
+	private: void DrawPoint(eVoVertex3* vertices, eVoColor32 color)
 	{
 		int x = vertices[0].x;
 		int y = vertices[0].y;
@@ -233,7 +233,7 @@ class eVoRenderer
 
 	 //---------------------------------------------------------------------------------------------------------
 
-	private: void DrawWireTriangle(eVoVector3* vertices, eVoColor32 color)
+	private: void DrawWireTriangle(eVoVertex3* vertices, eVoColor32 color)
 	{
 		DrawLine(&vertices[0], &vertices[1], color);
 		DrawLine(&vertices[1], &vertices[2], color);
@@ -242,7 +242,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawLine(eVoVector3* vertex1, eVoVector3* vertex2, eVoColor32 color)
+	private: void DrawLine(eVoVertex3* vertex1, eVoVertex3* vertex2, eVoColor32 color)
 	{
 		int x1 = vertex1->x + 0.5f;
 		int y1 = vertex1->y + 0.5f;

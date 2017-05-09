@@ -118,8 +118,8 @@
     <ClInclude Include="eVolution3D\eVoFrameBuffer.h" />
     <ClInclude Include="eVolution3D\eVoMath.hpp" />
     <ClInclude Include="eVolution3D\eVoMatrix4x4.hpp" />
-    <ClInclude Include="eVolution3D\eVoPoint3.hpp" />
-    <ClInclude Include="eVolution3D\eVoPoint4.hpp" />
+    <ClInclude Include="eVolution3D\eVoVertex3.hpp" />
+    <ClInclude Include="eVolution3D\eVoVertex4.hpp" />
     <ClInclude Include="eVolution3D\eVoRenderer.hpp" />
     <ClInclude Include="eVolution3D\eVoShaderIOData.h" />
     <ClInclude Include="eVolution3D\eVoVector3.hpp" />

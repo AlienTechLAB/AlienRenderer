@@ -1,7 +1,7 @@
 #pragma once
 #include <time.h>
 #include "eVolution3D/eVoRenderer.hpp"
-#include "eVolution3D/eVoVector3.hpp"
+#include "eVolution3D/eVoVertex3.hpp"
 #include "eVolution3D/eVoMatrix4x4.hpp"
 
 class Application
@@ -11,7 +11,7 @@ class Application
 	private:
 	eVoFrameBuffer<eVoColor32>* FrameBuffer = NULL;
 	eVoRenderer* Rednerer = NULL;
-	eVoVector3*  Vertices = NULL;
+	eVoVertex3*  Vertices = NULL;
 	eVoVertexShaderMVP VertexShader;
 
 	//---------------------------------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ class Application
 	{
 		Rednerer = new eVoRenderer();
 
-		Vertices = new eVoVector3[4];
+		Vertices = new eVoVertex3[4];
 		Vertices[0].x =-100; Vertices[0].y = 100;
 		Vertices[1].x = 100; Vertices[1].y = 100;
 		Vertices[2].x = 100; Vertices[2].y =-100;
