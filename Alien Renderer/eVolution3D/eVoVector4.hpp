@@ -41,7 +41,7 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator=(eVoVector4 vec4)
+	public: eVoVector4 operator=(eVoVector4& vec4)
 	{
 		x = vec4.x;
 		y = vec4.y;
@@ -52,14 +52,14 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator+(eVoVector4 vec4)
+	public: eVoVector4 operator+(eVoVector4& vec4)
 	{
 		return eVoVector4(x + vec4.x, y + vec4.y, z + vec4.z, w + vec4.w);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator+=(eVoVector4 vec4)
+	public: void operator+=(eVoVector4& vec4)
 	{
 		x += vec4.x;
 		y += vec4.y;
@@ -69,14 +69,14 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator-(eVoVector4 vec4)
+	public: eVoVector4 operator-(eVoVector4& vec4)
 	{
 		return eVoVector4(x - vec4.x, y - vec4.y, z - vec4.z, w - vec4.w);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator-=(eVoVector4 vec4)
+	public: void operator-=(eVoVector4& vec4)
 	{
 		x -= vec4.x;
 		y -= vec4.y;
@@ -128,7 +128,7 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator==(eVoVector4 vec4)
+	public: bool operator==(eVoVector4& vec4)
 	{
 		if (x != vec4.x) return false;
 		else if (y != vec4.y) return false;
@@ -139,7 +139,7 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator!=(eVoVector4 vec4)
+	public: bool operator!=(eVoVector4& vec4)
 	{
 		if (x != vec4.x) return true;
 		else if (y != vec4.y) return true;

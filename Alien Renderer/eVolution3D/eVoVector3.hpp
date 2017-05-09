@@ -40,7 +40,7 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator=(eVoVector3 vec3)
+	public: eVoVector3 operator=(eVoVector3& vec3)
 	{
 		x = vec3.x;
 		y = vec3.y;
@@ -50,14 +50,14 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator+(eVoVector3 vec3)
+	public: eVoVector3 operator+(eVoVector3& vec3)
 	{
 		return eVoVector3(x + vec3.x, y + vec3.y, z + vec3.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator+=(eVoVector3 vec3)
+	public: void operator+=(eVoVector3& vec3)
 	{
 		x += vec3.x;
 		y += vec3.y;
@@ -66,14 +66,14 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator-(eVoVector3 vec3)
+	public: eVoVector3 operator-(eVoVector3& vec3)
 	{
 		return eVoVector3(x - vec3.x, y - vec3.y, z - vec3.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator-=(eVoVector3 vec3)
+	public: void operator-=(eVoVector3& vec3)
 	{
 		x -= vec3.x;
 		y -= vec3.y;
@@ -122,7 +122,7 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator==(eVoVector3 vec3)
+	public: bool operator==(eVoVector3& vec3)
 	{
 		     if (x != vec3.x) return false;
 		else if (y != vec3.y) return false;
@@ -132,7 +132,7 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator!=(eVoVector3 vec3)
+	public: bool operator!=(eVoVector3& vec3)
 	{
 		     if (x != vec3.x) return true;
 		else if (y != vec3.y) return true;
