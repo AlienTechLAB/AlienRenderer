@@ -9,18 +9,7 @@ struct eVoVector4
 	//---------------------------------------------------------------------------------------------------------
 
 	public:
-	union
-	{
-		struct
-		{
-			float coords[4];
-		};
-
-		struct
-		{
-			float x, y, z, w;
-		};
-	};
+	float x, y, z, w;
 
 	//---------------------------------------------------------------------------------------------------------
 
@@ -31,12 +20,12 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4(float ax, float ay, float az, float aw)
+	public: eVoVector4(float ax, float ay, float az)
 	{
 		x = ax;
 		y = ay;
 		z = az;
-		w = aw;
+		w = 0;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -54,7 +43,7 @@ struct eVoVector4
 
 	public: eVoVector4 operator+(eVoVector4& vec4)
 	{
-		return eVoVector4(x + vec4.x, y + vec4.y, z + vec4.z, w + vec4.w);
+		return eVoVector4(x + vec4.x, y + vec4.y, z + vec4.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -64,14 +53,13 @@ struct eVoVector4
 		x += vec4.x;
 		y += vec4.y;
 		z += vec4.z;
-		w += vec4.w;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: eVoVector4 operator-(eVoVector4& vec4)
 	{
-		return eVoVector4(x - vec4.x, y - vec4.y, z - vec4.z, w - vec4.w);
+		return eVoVector4(x - vec4.x, y - vec4.y, z - vec4.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -81,14 +69,13 @@ struct eVoVector4
 		x -= vec4.x;
 		y -= vec4.y;
 		z -= vec4.z;
-		w -= vec4.w;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: eVoVector4 operator*(float factor)
 	{
-		return eVoVector4(x * factor, y * factor, z * factor, w * factor);
+		return eVoVector4(x * factor, y * factor, z * factor);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -98,7 +85,6 @@ struct eVoVector4
 		x *= factor;
 		y *= factor;
 		z *= factor;
-		w *= factor;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -106,7 +92,7 @@ struct eVoVector4
 	public: eVoVector4 operator/(float divisor)
 	{
 		if (divisor != 0)
-			return eVoVector4(x / divisor, y / divisor, z / divisor, w / divisor);
+			return eVoVector4(x / divisor, y / divisor, z / divisor);
 		else
 			throw eVoException("Division by 0!");
 	}
@@ -120,7 +106,6 @@ struct eVoVector4
 			x /= divisor;
 			y /= divisor;
 			z /= divisor;
-			w /= divisor;
 		}
 		else
 			throw eVoException("Division by 0!");
@@ -152,14 +137,14 @@ struct eVoVector4
 
 	public: void Normalize()
 	{
-		float invLen = eVoInvSqrt(x*x + y*y + z*z + w*w);
+		float invLen = eVoInvSqrt(x*x + y*y + z*z);
 
 		if (invLen > 0)
 		{
 			x *= invLen;
 			y *= invLen;
 			z *= invLen;
-			w *= invLen;
+			w = 0;
 		}
 		else
 		{
@@ -175,26 +160,26 @@ struct eVoVector4
 
 		switch (axis)
 		{
-		case eVoAxis::X:
-			c = y;
-			y = y * cos(angle) - z * sin(angle);
-			z = c * sin(angle) + z * cos(angle);
-			break;
+			case eVoAxis::X:
+				c = y;
+				y = y * cos(angle) - z * sin(angle);
+				z = c * sin(angle) + z * cos(angle);
+				break;
 
-		case eVoAxis::Y:
-			c = x;
-			x = z * sin(angle) + x * cos(angle);
-			z = z * cos(angle) - c * sin(angle);
-			break;
+			case eVoAxis::Y:
+				c = x;
+				x = z * sin(angle) + x * cos(angle);
+				z = z * cos(angle) - c * sin(angle);
+				break;
 
-		case eVoAxis::Z:
-			c = x;
-			x = y * sin(angle) + x * cos(angle);
-			y = y * cos(angle) - c * sin(angle);
-			break;
+			case eVoAxis::Z:
+				c = x;
+				x = y * sin(angle) + x * cos(angle);
+				y = y * cos(angle) - c * sin(angle);
+				break;
 
-		default:
-			throw eVoException("Unknown eVoAxis.");
+			default:
+				throw eVoException("Unknown eVoAxis.");
 		};
 	}
 
@@ -209,21 +194,22 @@ struct eVoVector4
 
 	public: static eVoVector4 Zero()
 	{
-		return eVoVector4(0, 0, 0, 0);
+		return eVoVector4(0, 0, 0);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: void SetOne()
 	{
-		x = y = z = w = 1;
+		x = y = z = 1;
+		w = 0;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: static eVoVector4 One()
 	{
-		return eVoVector4(1, 1, 1, 1);
+		return eVoVector4(1, 1, 1);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -233,14 +219,13 @@ struct eVoVector4
 		x = newX;
 		y = newY;
 		z = newZ;
-		w = newW;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: float Magnitude()
 	{
-		return eVoInvSqrt(x*x + y*y + z*z + w*w);
+		return eVoInvSqrt(x*x + y*y + z*z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
