@@ -37,7 +37,18 @@ struct eVoVertex4
 		x = point.x;
 		y = point.y;
 		z = point.z;
-		w = point.z;
+		w = point.w;
+		return *this;
+	}
+
+	//---------------------------------------------------------------------------------------------------------
+
+	public: eVoVertex4 operator=(eVoVertex3& point)
+	{
+		x = point.x;
+		y = point.y;
+		z = point.z;
+		w = 1;
 		return *this;
 	}
 

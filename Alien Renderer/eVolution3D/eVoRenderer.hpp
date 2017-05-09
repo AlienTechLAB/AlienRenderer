@@ -90,7 +90,7 @@ class eVoRenderer
 
 	private: void RenderPoints()
 	{
-		eVoVertex3 vertex;
+		eVoVertex4 vertex;
 
 		for (int i = 0; i < VerticesNo; i ++)
 		{
@@ -103,7 +103,7 @@ class eVoRenderer
 
 	private: void RenderLines()
 	{
-		eVoVertex3 vertices[2];
+		eVoVertex4 vertices[2];
 		int index = 0;
 		int linesNo = VerticesNo >> 1;
 
@@ -119,7 +119,7 @@ class eVoRenderer
 
 	private: void RenderLineStrip()
 	{
-		eVoVertex3 vertices[2];
+		eVoVertex4 vertices[2];
 		int linesNo = VerticesNo - 1;
 
 		if (linesNo > 0)
@@ -139,7 +139,7 @@ class eVoRenderer
 
 	private: void RenderLineLoop()
 	{
-		eVoVertex3 vertices[2];
+		eVoVertex4 vertices[2];
 		
 		if (VerticesNo > 2)
 		{
@@ -156,7 +156,7 @@ class eVoRenderer
 
 	private: void RenderWireTriangles()
 	{
-		eVoVertex3 vertices[3];
+		eVoVertex4 vertices[3];
 		int trianglesNo = VerticesNo / 3;
 
 		if (trianglesNo > 0)
@@ -177,7 +177,7 @@ class eVoRenderer
 
 	private: void RenderWireTriangleStrip()
 	{
-		eVoVertex3 vertices[3];
+		eVoVertex4 vertices[3];
 		int index = 2;
 		int trianglesNo = VerticesNo - 2;
 
@@ -203,7 +203,7 @@ class eVoRenderer
 
 	private: void RenderWireTriangleFan()
 	{
-		eVoVertex3 vertices[3];
+		eVoVertex4 vertices[3];
 		int index = 2;
 		int trianglesNo = VerticesNo - 2;
 
@@ -223,7 +223,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawPoint(eVoVertex3* vertices, eVoColor32 color)
+	private: void DrawPoint(eVoVertex4* vertices, eVoColor32 color)
 	{
 		int x = vertices[0].x;
 		int y = vertices[0].y;
@@ -233,7 +233,7 @@ class eVoRenderer
 
 	 //---------------------------------------------------------------------------------------------------------
 
-	private: void DrawWireTriangle(eVoVertex3* vertices, eVoColor32 color)
+	private: void DrawWireTriangle(eVoVertex4* vertices, eVoColor32 color)
 	{
 		DrawLine(&vertices[0], &vertices[1], color);
 		DrawLine(&vertices[1], &vertices[2], color);
@@ -242,7 +242,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawLine(eVoVertex3* vertex1, eVoVertex3* vertex2, eVoColor32 color)
+	private: void DrawLine(eVoVertex4* vertex1, eVoVertex4* vertex2, eVoColor32 color)
 	{
 		int x1 = vertex1->x + 0.5f;
 		int y1 = vertex1->y + 0.5f;
