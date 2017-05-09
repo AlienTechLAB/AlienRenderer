@@ -4,7 +4,7 @@
 #include "eVoMath.hpp"
 #include "eVoEnums.h"
 
-struct eVoVector3
+struct eVoVector4
 {
 	//---------------------------------------------------------------------------------------------------------
 
@@ -13,78 +13,82 @@ struct eVoVector3
 	{
 		struct
 		{
-			float coords[3];
+			float coords[4];
 		};
-	
+
 		struct
 		{
-			float x, y, z;
+			float x, y, z, w;
 		};
 	};
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3()
+	public: eVoVector4()
 	{
-		x = y = z = 0;
+		x = y = z = w = 0;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3(float ax, float ay, float az)
+	public: eVoVector4(float ax, float ay, float az, float aw)
 	{
 		x = ax;
 		y = ay;
 		z = az;
+		w = aw;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator=(eVoVector3 vec3)
+	public: eVoVector4 operator=(eVoVector4 vec4)
 	{
-		x = vec3.x;
-		y = vec3.y;
-		z = vec3.z;
+		x = vec4.x;
+		y = vec4.y;
+		z = vec4.z;
+		w = vec4.z;
 		return *this;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator+(eVoVector3 vec3)
+	public: eVoVector4 operator+(eVoVector4 vec4)
 	{
-		return eVoVector3(x + vec3.x, y + vec3.y, z + vec3.z);
+		return eVoVector4(x + vec4.x, y + vec4.y, z + vec4.z, w + vec4.w);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator+=(eVoVector3 vec3)
+	public: void operator+=(eVoVector4 vec4)
 	{
-		x += vec3.x;
-		y += vec3.y;
-		z += vec3.z;
+		x += vec4.x;
+		y += vec4.y;
+		z += vec4.z;
+		w += vec4.w;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator-(eVoVector3 vec3)
+	public: eVoVector4 operator-(eVoVector4 vec4)
 	{
-		return eVoVector3(x - vec3.x, y - vec3.y, z - vec3.z);
+		return eVoVector4(x - vec4.x, y - vec4.y, z - vec4.z, w - vec4.w);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator-=(eVoVector3 vec3)
+	public: void operator-=(eVoVector4 vec4)
 	{
-		x -= vec3.x;
-		y -= vec3.y;
-		z -= vec3.z;
+		x -= vec4.x;
+		y -= vec4.y;
+		z -= vec4.z;
+		w -= vec4.w;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator*(float factor)
+	public: eVoVector4 operator*(float factor)
 	{
-		return eVoVector3(x * factor, y * factor, z * factor);
+		return eVoVector4(x * factor, y * factor, z * factor, w * factor);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -94,14 +98,15 @@ struct eVoVector3
 		x *= factor;
 		y *= factor;
 		z *= factor;
+		w *= factor;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator/(float divisor)
+	public: eVoVector4 operator/(float divisor)
 	{
 		if (divisor != 0)
-			return eVoVector3(x / divisor, y / divisor, z / divisor);
+			return eVoVector4(x / divisor, y / divisor, z / divisor, w / divisor);
 		else
 			throw eVoException("Division by 0!");
 	}
@@ -115,6 +120,7 @@ struct eVoVector3
 			x /= divisor;
 			y /= divisor;
 			z /= divisor;
+			w /= divisor;
 		}
 		else
 			throw eVoException("Division by 0!");
@@ -122,21 +128,23 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator==(eVoVector3 vec3)
+	public: bool operator==(eVoVector4 vec4)
 	{
-		     if (x != vec3.x) return false;
-		else if (y != vec3.y) return false;
-		else if (z != vec3.z) return false;
+		if (x != vec4.x) return false;
+		else if (y != vec4.y) return false;
+		else if (z != vec4.z) return false;
+		else if (w != vec4.z) return false;
 		else return true;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator!=(eVoVector3 vec3)
+	public: bool operator!=(eVoVector4 vec4)
 	{
-		     if (x != vec3.x) return true;
-		else if (y != vec3.y) return true;
-		else if (z != vec3.z) return true;
+		if (x != vec4.x) return true;
+		else if (y != vec4.y) return true;
+		else if (z != vec4.z) return true;
+		else if (w != vec4.z) return true;
 		else return false;
 	}
 
@@ -144,17 +152,18 @@ struct eVoVector3
 
 	public: void Normalize()
 	{
-		float invLen = eVoInvSqrt(x*x + y*y + z*z);
+		float invLen = eVoInvSqrt(x*x + y*y + z*z + w*w);
 
 		if (invLen > 0)
 		{
 			x *= invLen;
 			y *= invLen;
 			z *= invLen;
+			w *= invLen;
 		}
 		else
 		{
-			x = y = z = 0;
+			x = y = z = w = 0;
 		}
 	}
 
@@ -166,26 +175,26 @@ struct eVoVector3
 
 		switch (axis)
 		{
-			case eVoAxis::X:
-				c = y;
-				y = y * cos(angle) - z * sin(angle);
-				z = c * sin(angle) + z * cos(angle);
-				break;
+		case eVoAxis::X:
+			c = y;
+			y = y * cos(angle) - z * sin(angle);
+			z = c * sin(angle) + z * cos(angle);
+			break;
 
-			case eVoAxis::Y:
-				c = x;
-				x = z * sin(angle) + x * cos(angle);
-				z = z * cos(angle) - c * sin(angle);
-				break;
+		case eVoAxis::Y:
+			c = x;
+			x = z * sin(angle) + x * cos(angle);
+			z = z * cos(angle) - c * sin(angle);
+			break;
 
-			case eVoAxis::Z:
-				c = x;
-				x = y * sin(angle) + x * cos(angle);
-				y = y * cos(angle) - c * sin(angle);
-				break;
+		case eVoAxis::Z:
+			c = x;
+			x = y * sin(angle) + x * cos(angle);
+			y = y * cos(angle) - c * sin(angle);
+			break;
 
-			default:
-				throw eVoException("Unknown eVoAxis.");
+		default:
+			throw eVoException("Unknown eVoAxis.");
 		};
 	}
 
@@ -193,44 +202,45 @@ struct eVoVector3
 
 	public: void SetZero()
 	{
-		x = y = z = 0;
+		x = y = z = w = 0;
 	}
-	
+
 	//---------------------------------------------------------------------------------------------------------
 
-	public: static eVoVector3 Zero()
+	public: static eVoVector4 Zero()
 	{
-		return eVoVector3(0, 0, 0);
+		return eVoVector4(0, 0, 0, 0);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: void SetOne()
 	{
-		x = y = z = 1;
+		x = y = z = w = 1;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: static eVoVector3 One()
+	public: static eVoVector4 One()
 	{
-		return eVoVector3(1, 1, 1);
+		return eVoVector4(1, 1, 1, 1);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetCoords(float newX, float newY, float newZ)
+	public: void SetCoords(float newX, float newY, float newZ, float newW)
 	{
 		x = newX;
 		y = newY;
 		z = newZ;
+		w = newW;
 	}
-	
+
 	//---------------------------------------------------------------------------------------------------------
 
 	public: float Magnitude()
 	{
-		return eVoInvSqrt(x*x + y*y + z*z);
+		return eVoInvSqrt(x*x + y*y + z*z + w*w);
 	}
 
 	//---------------------------------------------------------------------------------------------------------

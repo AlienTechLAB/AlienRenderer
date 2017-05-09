@@ -54,6 +54,9 @@
     <ClInclude Include="eVolution3D\eVoWindowsFrameBuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="eVolution3D\eVoVector4.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
