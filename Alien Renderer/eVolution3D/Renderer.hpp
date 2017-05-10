@@ -78,14 +78,14 @@ namespace eVolution3D
 		{
 			switch (Mode)
 			{
-			case DrawingMode::POINT: RenderPoints(); break;
-			case DrawingMode::LINE: RenderLines(); break;
-			case DrawingMode::LINE_STRIP: RenderLineStrip(); break;
-			case DrawingMode::LINE_LOOP: RenderLineLoop(); break;
-			case DrawingMode::WIRE_TRIANGLES: RenderWireTriangles(); break;
-			case DrawingMode::TRIANGLE_STRIP: RenderWireTriangleStrip(); break;
-			case DrawingMode::TRIANGLE_FAN: RenderWireTriangleFan(); break;
-			default: throw std::exception("Unknown DrawingMode");
+				case DrawingMode::POINT: RenderPoints(); break;
+				case DrawingMode::LINE: RenderLines(); break;
+				case DrawingMode::LINE_STRIP: RenderLineStrip(); break;
+				case DrawingMode::LINE_LOOP: RenderLineLoop(); break;
+				case DrawingMode::WIRE_TRIANGLES: RenderWireTriangles(); break;
+				case DrawingMode::TRIANGLE_STRIP: RenderWireTriangleStrip(); break;
+				case DrawingMode::TRIANGLE_FAN: RenderWireTriangleFan(); break;
+				default: throw std::exception("Unknown DrawingMode");
 			}
 		}
 
@@ -228,8 +228,8 @@ namespace eVolution3D
 
 		private: void DrawPoint(Vertex4* vertices, Color32 color)
 		{
-			int x = vertices[0].x;
-			int y = vertices[0].y;
+			int x = (int)(vertices[0].x + 0.5f);
+			int y = (int)(vertices[0].y + 0.5f);
 			Color32* address = Frame->GetPixelAddress(x, y);
 			*address = color;
 		}
@@ -247,10 +247,10 @@ namespace eVolution3D
 
 		private: void DrawLine(Vertex4* vertex1, Vertex4* vertex2, Color32 color)
 		{
-			int x1 = vertex1->x + 0.5f;
-			int y1 = vertex1->y + 0.5f;
-			int x2 = vertex2->x + 0.5f;
-			int y2 = vertex2->y + 0.5f;
+			int x1 = (int)(vertex1->x + 0.5f);
+			int y1 = (int)(vertex1->y + 0.5f);
+			int x2 = (int)(vertex2->x + 0.5f);
+			int y2 = (int)(vertex2->y + 0.5f);
 
 			// Check if whole line is out of the screen
 			if (x1 < 0 && x2 < 0)
