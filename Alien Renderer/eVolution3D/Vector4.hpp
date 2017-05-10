@@ -4,7 +4,7 @@
 #include "eVoMath.hpp"
 #include "eVoEnums.h"
 
-struct eVoVector4
+struct Vector4
 {
 	//---------------------------------------------------------------------------------------------------------
 
@@ -13,14 +13,14 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4()
+	public: Vector4()
 	{
 		x = y = z = w = 0;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4(float ax, float ay, float az)
+	public: Vector4(float ax, float ay, float az)
 	{
 		x = ax;
 		y = ay;
@@ -30,7 +30,7 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator=(eVoVector4& vec4)
+	public: Vector4 operator=(Vector4& vec4)
 	{
 		x = vec4.x;
 		y = vec4.y;
@@ -41,14 +41,14 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator+(eVoVector4& vec4)
+	public: Vector4 operator+(Vector4& vec4)
 	{
-		return eVoVector4(x + vec4.x, y + vec4.y, z + vec4.z);
+		return Vector4(x + vec4.x, y + vec4.y, z + vec4.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator+=(eVoVector4& vec4)
+	public: void operator+=(Vector4& vec4)
 	{
 		x += vec4.x;
 		y += vec4.y;
@@ -57,14 +57,14 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator-(eVoVector4& vec4)
+	public: Vector4 operator-(Vector4& vec4)
 	{
-		return eVoVector4(x - vec4.x, y - vec4.y, z - vec4.z);
+		return Vector4(x - vec4.x, y - vec4.y, z - vec4.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator-=(eVoVector4& vec4)
+	public: void operator-=(Vector4& vec4)
 	{
 		x -= vec4.x;
 		y -= vec4.y;
@@ -73,9 +73,9 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator*(float factor)
+	public: Vector4 operator*(float factor)
 	{
-		return eVoVector4(x * factor, y * factor, z * factor);
+		return Vector4(x * factor, y * factor, z * factor);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -89,10 +89,10 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator/(float divisor)
+	public: Vector4 operator/(float divisor)
 	{
 		if (divisor != 0)
-			return eVoVector4(x / divisor, y / divisor, z / divisor);
+			return Vector4(x / divisor, y / divisor, z / divisor);
 		else
 			throw eVoException("Division by 0!");
 	}
@@ -113,7 +113,7 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator==(eVoVector4& vec4)
+	public: bool operator==(Vector4& vec4)
 	{
 		if (x != vec4.x) return false;
 		else if (y != vec4.y) return false;
@@ -124,7 +124,7 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator!=(eVoVector4& vec4)
+	public: bool operator!=(Vector4& vec4)
 	{
 		if (x != vec4.x) return true;
 		else if (y != vec4.y) return true;
@@ -192,9 +192,9 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: static eVoVector4 Zero()
+	public: static Vector4 Zero()
 	{
-		return eVoVector4(0, 0, 0);
+		return Vector4(0, 0, 0);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -207,9 +207,9 @@ struct eVoVector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: static eVoVector4 One()
+	public: static Vector4 One()
 	{
-		return eVoVector4(1, 1, 1);
+		return Vector4(1, 1, 1);
 	}
 
 	//---------------------------------------------------------------------------------------------------------

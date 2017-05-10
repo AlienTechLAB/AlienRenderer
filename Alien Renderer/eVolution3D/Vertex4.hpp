@@ -3,7 +3,8 @@
 #include "eVoException.hpp"
 #include "eVoMath.hpp"
 #include "eVoEnums.h"
-#include "eVoVector4.hpp"
+#include "Vertex3.hpp"
+#include "Vector4.hpp"
 
 struct Vertex4
 {
@@ -54,9 +55,9 @@ struct Vertex4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator-(Vertex4& point)
+	public: Vector4 operator-(Vertex4& point)
 	{
-		return eVoVector4(x - point.x, y - point.y, z - point.z);
+		return Vector4(x - point.x, y - point.y, z - point.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
