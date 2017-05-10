@@ -1,7 +1,7 @@
 #pragma once
 #include <string.h>
 #include "eVoVector3.hpp"
-#include "eVoVertex4.hpp"
+#include "Vertex4.hpp"
 
 struct eVoMatrix4x4
 {
@@ -130,9 +130,9 @@ struct eVoMatrix4x4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVertex4 operator*(eVoVertex3& vector)
+	public: Vertex4 operator*(eVoVertex3& vector)
 	{
-		eVoVertex4 v;
+		Vertex4 v;
 		v.x = M[0][0] * vector.x + M[1][0] * vector.y + M[2][0] * vector.z + M[3][0];
 		v.y = M[0][1] * vector.x + M[1][1] * vector.y + M[2][1] * vector.z + M[3][1];
 		v.z = M[0][2] * vector.x + M[1][2] * vector.y + M[2][2] * vector.z + M[3][2];

@@ -5,7 +5,7 @@
 #include "eVoEnums.h"
 #include "eVoVector4.hpp"
 
-struct eVoVertex4
+struct Vertex4
 {
 	//---------------------------------------------------------------------------------------------------------
 
@@ -14,7 +14,7 @@ struct eVoVertex4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVertex4()
+	public: Vertex4()
 	{
 		x = y = z = 0;
 		w = 1;
@@ -22,7 +22,7 @@ struct eVoVertex4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVertex4(float ax, float ay, float az)
+	public: Vertex4(float ax, float ay, float az)
 	{
 		x = ax;
 		y = ay;
@@ -32,7 +32,7 @@ struct eVoVertex4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVertex4 operator=(eVoVertex4& point)
+	public: Vertex4 operator=(Vertex4& point)
 	{
 		x = point.x;
 		y = point.y;
@@ -43,7 +43,7 @@ struct eVoVertex4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVertex4 operator=(eVoVertex3& point)
+	public: Vertex4 operator=(eVoVertex3& point)
 	{
 		x = point.x;
 		y = point.y;
@@ -54,14 +54,14 @@ struct eVoVertex4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector4 operator-(eVoVertex4& point)
+	public: eVoVector4 operator-(Vertex4& point)
 	{
 		return eVoVector4(x - point.x, y - point.y, z - point.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator==(eVoVertex4& point)
+	public: bool operator==(Vertex4& point)
 	{
 		if (x != point.x) return false;
 		else if (y != point.y) return false;
@@ -72,7 +72,7 @@ struct eVoVertex4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator!=(eVoVertex4& point)
+	public: bool operator!=(Vertex4& point)
 	{
 		if (x != point.x) return true;
 		else if (y != point.y) return true;
