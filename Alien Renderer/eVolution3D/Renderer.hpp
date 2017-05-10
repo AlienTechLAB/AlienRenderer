@@ -7,7 +7,7 @@
 #include "eVolution3D/VertexShader.hpp"
 #include "eVolution3D/ShaderIOData.h"
 
-class eVoRenderer
+class Renderer
 {
 	//---------------------------------------------------------------------------------------------------------
 
