@@ -4,7 +4,7 @@
 #include "eVoMath.hpp"
 #include "eVoEnums.h"
 
-struct eVoVector3
+struct Vector3
 {
 	//---------------------------------------------------------------------------------------------------------
 
@@ -13,14 +13,14 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3()
+	public: Vector3()
 	{
 		x = y = z = 0;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3(float ax, float ay, float az)
+	public: Vector3(float ax, float ay, float az)
 	{
 		x = ax;
 		y = ay;
@@ -29,7 +29,7 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator=(eVoVector3& vec3)
+	public: Vector3 operator=(Vector3& vec3)
 	{
 		x = vec3.x;
 		y = vec3.y;
@@ -39,14 +39,14 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator+(eVoVector3& vec3)
+	public: Vector3 operator+(Vector3& vec3)
 	{
-		return eVoVector3(x + vec3.x, y + vec3.y, z + vec3.z);
+		return Vector3(x + vec3.x, y + vec3.y, z + vec3.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator+=(eVoVector3& vec3)
+	public: void operator+=(Vector3& vec3)
 	{
 		x += vec3.x;
 		y += vec3.y;
@@ -55,14 +55,14 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator-(eVoVector3& vec3)
+	public: Vector3 operator-(Vector3& vec3)
 	{
-		return eVoVector3(x - vec3.x, y - vec3.y, z - vec3.z);
+		return Vector3(x - vec3.x, y - vec3.y, z - vec3.z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator-=(eVoVector3& vec3)
+	public: void operator-=(Vector3& vec3)
 	{
 		x -= vec3.x;
 		y -= vec3.y;
@@ -71,9 +71,9 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator*(float factor)
+	public: Vector3 operator*(float factor)
 	{
-		return eVoVector3(x * factor, y * factor, z * factor);
+		return Vector3(x * factor, y * factor, z * factor);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -87,10 +87,10 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoVector3 operator/(float divisor)
+	public: Vector3 operator/(float divisor)
 	{
 		if (divisor != 0)
-			return eVoVector3(x / divisor, y / divisor, z / divisor);
+			return Vector3(x / divisor, y / divisor, z / divisor);
 		else
 			throw eVoException("Division by 0!");
 	}
@@ -111,7 +111,7 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator==(eVoVector3& vec3)
+	public: bool operator==(Vector3& vec3)
 	{
 		     if (x != vec3.x) return false;
 		else if (y != vec3.y) return false;
@@ -121,7 +121,7 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: bool operator!=(eVoVector3& vec3)
+	public: bool operator!=(Vector3& vec3)
 	{
 		     if (x != vec3.x) return true;
 		else if (y != vec3.y) return true;
@@ -187,9 +187,9 @@ struct eVoVector3
 	
 	//---------------------------------------------------------------------------------------------------------
 
-	public: static eVoVector3 Zero()
+	public: static Vector3 Zero()
 	{
-		return eVoVector3(0, 0, 0);
+		return Vector3(0, 0, 0);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -201,9 +201,9 @@ struct eVoVector3
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: static eVoVector3 One()
+	public: static Vector3 One()
 	{
-		return eVoVector3(1, 1, 1);
+		return Vector3(1, 1, 1);
 	}
 
 	//---------------------------------------------------------------------------------------------------------

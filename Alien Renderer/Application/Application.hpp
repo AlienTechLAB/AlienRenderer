@@ -46,10 +46,10 @@ class Application
 		eVoMatrix4x4 rotation;
 		float t = clock() * 0.001f;
 		//rotation.SetYRotation(t1 * 0.001f);
-		rotation.SetEulerRotation(eVoVector3(0, 0, t));
+		rotation.SetEulerRotation(Vector3(0, 0, t));
 		
 		eVoMatrix4x4 translation;
-		translation.SetTranslation(eVoVector3(500, 500, 100));
+		translation.SetTranslation(Vector3(500, 500, 100));
 
 		eVoMatrix4x4 scale;
 		scale.SetScale(0.3f);

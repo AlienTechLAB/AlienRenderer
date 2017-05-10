@@ -122,7 +122,7 @@
     <ClInclude Include="eVolution3D\Vertex4.hpp" />
     <ClInclude Include="eVolution3D\eVoRenderer.hpp" />
     <ClInclude Include="eVolution3D\eVoShaderIOData.h" />
-    <ClInclude Include="eVolution3D\eVoVector3.hpp" />
+    <ClInclude Include="eVolution3D\Vector3.hpp" />
     <ClInclude Include="eVolution3D\eVoVector4.hpp" />
     <ClInclude Include="eVolution3D\eVoVertexShader.hpp" />
     <ClInclude Include="eVolution3D\eVoWindowsFrameBuffer.hpp" />

@@ -1,6 +1,6 @@
 #pragma once
 #include <string.h>
-#include "eVoVector3.hpp"
+#include "Vector3.hpp"
 #include "Vertex4.hpp"
 
 struct eVoMatrix4x4
@@ -19,7 +19,7 @@ struct eVoMatrix4x4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetTranslation(eVoVector3& vector)
+	public: void SetTranslation(Vector3& vector)
 	{
 		SetIdentity();
 		M[3][0] = vector.x;
@@ -40,7 +40,7 @@ struct eVoMatrix4x4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetEulerRotation(eVoVector3& eulerAngles)
+	public: void SetEulerRotation(Vector3& eulerAngles)
 	{
 		float sx = sin(eulerAngles.x);
 		float cx = cos(eulerAngles.x);
