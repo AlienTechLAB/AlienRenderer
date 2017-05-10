@@ -5,7 +5,7 @@
 #include "eVolution3D/Color32.hpp"
 #include "eVolution3D/Vertex3.hpp"
 #include "eVolution3D/VertexShader.hpp"
-#include "eVoShaderIOData.h"
+#include "eVolution3D/ShaderIOData.h"
 
 class eVoRenderer
 {
@@ -17,7 +17,7 @@ class eVoRenderer
 	int VerticesNo = 0;
 	DrawingMode Mode = DrawingMode::POINT;
 	VertexShader* Shader = NULL;
-	eVoShaderIOData ShaderIOData;
+	ShaderIOData ShaderIOData;
 
 	//---------------------------------------------------------------------------------------------------------
 

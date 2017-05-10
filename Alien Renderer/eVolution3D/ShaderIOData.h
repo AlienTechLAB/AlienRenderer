@@ -1,7 +1,7 @@
 #pragma once
 #include "eVoMatrix4x4.hpp"
 
-struct eVoShaderIOData
+struct ShaderIOData
 {
 	//---------------------------------------------------------------------------------------------------------
 
