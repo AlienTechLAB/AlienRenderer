@@ -130,7 +130,7 @@ struct eVoMatrix4x4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: Vertex4 operator*(eVoVertex3& vector)
+	public: Vertex4 operator*(Vertex3& vector)
 	{
 		Vertex4 v;
 		v.x = M[0][0] * vector.x + M[1][0] * vector.y + M[2][0] * vector.z + M[3][0];

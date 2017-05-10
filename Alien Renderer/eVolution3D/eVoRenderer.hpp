@@ -3,7 +3,7 @@
 #include "eVolution3D/eVoFrameBuffer.h"
 #include "eVolution3D/eVoConstants.h"
 #include "eVolution3D/eVoColor32.hpp"
-#include "eVolution3D/eVoVertex3.hpp"
+#include "eVolution3D/Vertex3.hpp"
 #include "eVolution3D/eVoVertexShader.hpp"
 #include "eVoShaderIOData.h"
 
@@ -13,7 +13,7 @@ class eVoRenderer
 
 	private:
 	eVoFrameBuffer<eVoColor32>* FrameBuffer = NULL;
-	eVoVertex3* Vertices = NULL;
+	Vertex3* Vertices = NULL;
 	int VerticesNo = 0;
 	eVoDrawingMode DrawingMode = eVoDrawingMode::POINT;
 	eVoVertexShader* VertexShader = NULL;
@@ -28,7 +28,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetVertices(eVoVertex3* vertices, int verticesNo)
+	public: void SetVertices(Vertex3* vertices, int verticesNo)
 	{
 		Vertices = vertices;
 		VerticesNo = verticesNo;

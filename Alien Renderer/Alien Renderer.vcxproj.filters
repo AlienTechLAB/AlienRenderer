@@ -57,10 +57,10 @@
     <ClInclude Include="eVolution3D\eVoVector4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="eVolution3D\eVoVertex3.hpp">
+    <ClInclude Include="eVolution3D\Vertex4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="eVolution3D\Vertex4.hpp">
+    <ClInclude Include="eVolution3D\Vertex3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

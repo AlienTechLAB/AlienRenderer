@@ -43,7 +43,7 @@ struct Vertex4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: Vertex4 operator=(eVoVertex3& point)
+	public: Vertex4 operator=(Vertex3& point)
 	{
 		x = point.x;
 		y = point.y;
