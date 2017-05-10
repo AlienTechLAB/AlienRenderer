@@ -1,6 +1,6 @@
 #pragma once
 #include <math.h>
-#include "eVolution3D/eVoFrameBuffer.h"
+#include "eVolution3D/FrameBuffer.h"
 #include "eVolution3D/Constants.h"
 #include "eVolution3D/Color32.hpp"
 #include "eVolution3D/Vertex3.hpp"
@@ -12,7 +12,7 @@ class eVoRenderer
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	eVoFrameBuffer<Color32>* FrameBuffer = NULL;
+	FrameBuffer<Color32>* Frame = NULL;
 	Vertex3* Vertices = NULL;
 	int VerticesNo = 0;
 	DrawingMode Mode = DrawingMode::POINT;
@@ -21,9 +21,9 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetTargetBuffer(eVoFrameBuffer<Color32>* frameBuffer)
+	public: void SetTargetBuffer(FrameBuffer<Color32>* frameBuffer)
 	{
-		FrameBuffer = frameBuffer;
+		Frame = frameBuffer;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -62,8 +62,8 @@ class eVoRenderer
 
 	public: void ClearBufferWithColor(Color32 color)
 	{
-		int bufferSize = FrameBuffer->GetBufferSizeInPixels();
-		Color32* buffer = (Color32*)FrameBuffer->GetBuffer();
+		int bufferSize = Frame->GetBufferSizeInPixels();
+		Color32* buffer = (Color32*)Frame->GetBuffer();
 
 		for (int i = 0; i < bufferSize; i++)
 			buffer[i] = color;
@@ -227,7 +227,7 @@ class eVoRenderer
 	{
 		int x = vertices[0].x;
 		int y = vertices[0].y;
-		Color32* address = FrameBuffer->GetPixelAddress(x, y);
+		Color32* address = Frame->GetPixelAddress(x, y);
 		*address = color;
 	}
 
@@ -256,8 +256,8 @@ class eVoRenderer
 		if (y1 < 0 && y2 < 0)
 			return;
 
-		int r = FrameBuffer->GetWidth() - 1;
-		int t = FrameBuffer->GetHeight() - 1;
+		int r = Frame->GetWidth() - 1;
+		int t = Frame->GetHeight() - 1;
 
 		if (x1 > r && x2 > r)
 			return;
@@ -272,7 +272,7 @@ class eVoRenderer
 			if (y1 == y2)
 			{
 				// Draw dot - it's for sure on the screen
-				FrameBuffer->PutPixel(x1, y1, color);
+				Frame->PutPixel(x1, y1, color);
 				return;
 			}
 			else
@@ -350,8 +350,8 @@ class eVoRenderer
 			yMax = y1;
 		}
 
-		int screenWidth = FrameBuffer->GetWidth();
-		Color32* address = FrameBuffer->GetPixelAddress(x, yMin);
+		int screenWidth = Frame->GetWidth();
+		Color32* address = Frame->GetPixelAddress(x, yMin);
 
 		for (int y = yMin; y <= yMax; y++)
 		{
@@ -377,7 +377,7 @@ class eVoRenderer
 			xMax = x1;
 		}
 
-		Color32* address = FrameBuffer->GetPixelAddress(xMin, y);
+		Color32* address = Frame->GetPixelAddress(xMin, y);
 
 		for (int y = xMin; y <= xMax; y++)
 		{
@@ -390,8 +390,8 @@ class eVoRenderer
 
 	private: void DrawDiagonalLine(int x1, int y1, int x2, int y2, Color32 color)
 	{
-		Color32* address = FrameBuffer->GetPixelAddress(x1, y1);
-		int screenWidth = FrameBuffer->GetWidth();
+		Color32* address = Frame->GetPixelAddress(x1, y1);
+		int screenWidth = Frame->GetWidth();
 
 		// Bresenham's line algorithm
 		*address = color;

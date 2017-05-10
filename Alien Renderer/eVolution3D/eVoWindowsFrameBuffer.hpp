@@ -1,8 +1,8 @@
 #pragma once
 #include <windows.h>
-#include "eVoFrameBuffer.h"
+#include "FrameBuffer.h"
 
-template <typename PixelType> class eVoWindowsFrameBuffer : public eVoFrameBuffer<PixelType>
+template <typename PixelType> class eVoWindowsFrameBuffer : public FrameBuffer<PixelType>
 {
 	//---------------------------------------------------------------------------------------------------------
 

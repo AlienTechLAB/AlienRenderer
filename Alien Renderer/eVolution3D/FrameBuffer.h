@@ -1,7 +1,7 @@
 #pragma once
 #include "eVolution3D/Color32.hpp"
 
-template <typename PixelType> class eVoFrameBuffer
+template <typename PixelType> class FrameBuffer
 {
 	//---------------------------------------------------------------------------------------------------------
 
