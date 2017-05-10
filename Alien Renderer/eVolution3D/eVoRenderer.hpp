@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 #include "eVolution3D/eVoFrameBuffer.h"
-#include "eVolution3D/eVoConstants.h"
+#include "eVolution3D/Constants.h"
 #include "eVolution3D/Color32.hpp"
 #include "eVolution3D/Vertex3.hpp"
 #include "eVolution3D/eVoVertexShader.hpp"

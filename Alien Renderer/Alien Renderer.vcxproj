@@ -112,7 +112,7 @@
   <ItemGroup>
     <ClInclude Include="Application\Application.hpp" />
     <ClInclude Include="eVolution3D\Color32.hpp" />
-    <ClInclude Include="eVolution3D\eVoConstants.h" />
+    <ClInclude Include="eVolution3D\Constants.h" />
     <ClInclude Include="eVolution3D\eVoEnums.h" />
     <ClInclude Include="eVolution3D\eVoException.hpp" />
     <ClInclude Include="eVolution3D\eVoFrameBuffer.h" />
