@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h> 
 #include "eVoException.hpp"
-#include "eVoMath.hpp"
+#include "Math.hpp"
 #include "Enums.h"
 #include "Vertex3.hpp"
 #include "Vector4.hpp"

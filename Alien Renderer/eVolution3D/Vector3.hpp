@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h> 
 #include "eVoException.hpp"
-#include "eVoMath.hpp"
+#include "Math.hpp"
 #include "Enums.h"
 
 struct Vector3
@@ -133,7 +133,7 @@ struct Vector3
 
 	public: void Normalize()
 	{
-		float invLen = eVoInvSqrt(x*x + y*y + z*z);
+		float invLen = InvSqrt(x*x + y*y + z*z);
 
 		if (invLen > 0)
 		{
@@ -219,7 +219,7 @@ struct Vector3
 
 	public: float Magnitude()
 	{
-		return eVoInvSqrt(x*x + y*y + z*z);
+		return InvSqrt(x*x + y*y + z*z);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
