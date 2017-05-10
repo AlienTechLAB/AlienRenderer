@@ -125,7 +125,7 @@
     <ClInclude Include="eVolution3D\Vector3.hpp" />
     <ClInclude Include="eVolution3D\Vector4.hpp" />
     <ClInclude Include="eVolution3D\eVoVertexShader.hpp" />
-    <ClInclude Include="eVolution3D\eVoWindowsFrameBuffer.hpp" />
+    <ClInclude Include="eVolution3D\WindowsFrameBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

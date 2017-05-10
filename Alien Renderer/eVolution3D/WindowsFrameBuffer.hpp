@@ -2,7 +2,7 @@
 #include <windows.h>
 #include "FrameBuffer.h"
 
-template <typename PixelType> class eVoWindowsFrameBuffer : public FrameBuffer<PixelType>
+template <typename PixelType> class WindowsFrameBuffer : public FrameBuffer<PixelType>
 {
 	//---------------------------------------------------------------------------------------------------------
 
@@ -15,7 +15,7 @@ template <typename PixelType> class eVoWindowsFrameBuffer : public FrameBuffer<P
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: ~eVoWindowsFrameBuffer()
+	public: ~WindowsFrameBuffer()
 	{
 		Release();
 	}
