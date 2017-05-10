@@ -18,9 +18,6 @@
     <ClInclude Include="Application\Application.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="eVolution3D\eVoException.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="eVolution3D\Vertex4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

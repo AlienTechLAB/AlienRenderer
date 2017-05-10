@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <exception>
 #include "eVolution3D/FrameBuffer.h"
 #include "eVolution3D/Constants.h"
 #include "eVolution3D/Color32.hpp"
@@ -82,7 +83,7 @@ class Renderer
 			case DrawingMode::WIRE_TRIANGLES: RenderWireTriangles(); break;
 			case DrawingMode::TRIANGLE_STRIP: RenderWireTriangleStrip(); break;
 			case DrawingMode::TRIANGLE_FAN: RenderWireTriangleFan(); break;
-			default: throw eVoException("Unknown DrawingMode");
+			default: throw std::exception("Unknown DrawingMode");
 		}
 	}
 

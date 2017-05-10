@@ -1,6 +1,6 @@
 #pragma once
 #include <math.h> 
-#include "eVoException.hpp"
+#include <exception>
 #include "Math.hpp"
 #include "Enums.h"
 #include "Vector3.hpp"
@@ -92,7 +92,7 @@ struct Vertex3
 			break;
 
 		default:
-			throw eVoException("Unknown eVoAxis.");
+			throw std::exception("Unknown eVoAxis.");
 		};
 	}
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <math.h> 
-#include "eVoException.hpp"
+#include <exception>
 #include "Math.hpp"
 #include "Enums.h"
 
@@ -94,7 +94,7 @@ struct Vector4
 		if (divisor != 0)
 			return Vector4(x / divisor, y / divisor, z / divisor);
 		else
-			throw eVoException("Division by 0!");
+			throw std::exception("Division by 0!");
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ struct Vector4
 			z /= divisor;
 		}
 		else
-			throw eVoException("Division by 0!");
+			throw std::exception("Division by 0!");
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -179,7 +179,7 @@ struct Vector4
 				break;
 
 			default:
-				throw eVoException("Unknown eVoAxis.");
+				throw std::exception("Unknown eVoAxis.");
 		};
 	}
 
