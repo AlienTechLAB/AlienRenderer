@@ -9,14 +9,14 @@ class Application
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	eVoFrameBuffer<eVoColor32>* FrameBuffer = NULL;
+	eVoFrameBuffer<Color32>* FrameBuffer = NULL;
 	eVoRenderer* Rednerer = NULL;
 	Vertex3*  Vertices = NULL;
 	eVoVertexShaderMVP VertexShader;
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetFrameBuffer(eVoFrameBuffer<eVoColor32>* frameBuffer)
+	public: void SetFrameBuffer(eVoFrameBuffer<Color32>* frameBuffer)
 	{
 		FrameBuffer = frameBuffer;
 	}
@@ -69,7 +69,7 @@ class Application
 
 	public: void UpdateFrameBuffer()
 	{
-		Rednerer->ClearBufferWithColor(eVoColor32::Black);
+		Rednerer->ClearBufferWithColor(Color32::Black);
 		Rednerer->Render();
 	}
 

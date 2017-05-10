@@ -1,5 +1,5 @@
 #pragma once
-#include "eVolution3D/eVoColor32.hpp"
+#include "eVolution3D/Color32.hpp"
 
 template <typename PixelType> class eVoFrameBuffer
 {

@@ -2,7 +2,7 @@
 #include <math.h>
 #include "eVolution3D/eVoFrameBuffer.h"
 #include "eVolution3D/eVoConstants.h"
-#include "eVolution3D/eVoColor32.hpp"
+#include "eVolution3D/Color32.hpp"
 #include "eVolution3D/Vertex3.hpp"
 #include "eVolution3D/eVoVertexShader.hpp"
 #include "eVoShaderIOData.h"
@@ -12,7 +12,7 @@ class eVoRenderer
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	eVoFrameBuffer<eVoColor32>* FrameBuffer = NULL;
+	eVoFrameBuffer<Color32>* FrameBuffer = NULL;
 	Vertex3* Vertices = NULL;
 	int VerticesNo = 0;
 	eVoDrawingMode DrawingMode = eVoDrawingMode::POINT;
@@ -21,7 +21,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetTargetBuffer(eVoFrameBuffer<eVoColor32>* frameBuffer)
+	public: void SetTargetBuffer(eVoFrameBuffer<Color32>* frameBuffer)
 	{
 		FrameBuffer = frameBuffer;
 	}
@@ -60,10 +60,10 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void ClearBufferWithColor(eVoColor32 color)
+	public: void ClearBufferWithColor(Color32 color)
 	{
 		int bufferSize = FrameBuffer->GetBufferSizeInPixels();
-		eVoColor32* buffer = (eVoColor32*)FrameBuffer->GetBuffer();
+		Color32* buffer = (Color32*)FrameBuffer->GetBuffer();
 
 		for (int i = 0; i < bufferSize; i++)
 			buffer[i] = color;
@@ -95,7 +95,7 @@ class eVoRenderer
 		for (int i = 0; i < VerticesNo; i ++)
 		{
 			VertexShader->ProcessVertex(&Vertices[i], &vertex, ShaderIOData);
-			DrawPoint(&vertex, eVoColor32::Green);
+			DrawPoint(&vertex, Color32::Green);
 		}
 	}
 
@@ -111,7 +111,7 @@ class eVoRenderer
 		{
 			VertexShader->ProcessVertex(&Vertices[index++], &vertices[0], ShaderIOData);
 			VertexShader->ProcessVertex(&Vertices[index++], &vertices[1], ShaderIOData);
-			DrawLine(&vertices[0], &vertices[1], eVoColor32::Green);
+			DrawLine(&vertices[0], &vertices[1], Color32::Green);
 		}
 	}
 
@@ -129,7 +129,7 @@ class eVoRenderer
 			for (int i = 1; i < VerticesNo; i++)
 			{
 				VertexShader->ProcessVertex(&Vertices[i], &vertices[i], ShaderIOData);
-				DrawLine(&vertices[0], &vertices[1], eVoColor32::Green);
+				DrawLine(&vertices[0], &vertices[1], Color32::Green);
 				vertices[0] = vertices[1];
 			}
 		}
@@ -147,7 +147,7 @@ class eVoRenderer
 			{
 				VertexShader->ProcessVertex(&Vertices[i], &vertices[0], ShaderIOData);
 				VertexShader->ProcessVertex(&Vertices[(i + 1) % VerticesNo], &vertices[1], ShaderIOData);
-				DrawLine(&vertices[0], &vertices[1], eVoColor32::Green);
+				DrawLine(&vertices[0], &vertices[1], Color32::Green);
 			}
 		}
 	}
@@ -168,7 +168,7 @@ class eVoRenderer
 				VertexShader->ProcessVertex(&Vertices[index++], &vertices[0], ShaderIOData);
 				VertexShader->ProcessVertex(&Vertices[index++], &vertices[1], ShaderIOData);
 				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
-				DrawWireTriangle(&vertices[0], eVoColor32::Green);
+				DrawWireTriangle(&vertices[0], Color32::Green);
 			}
 		}
 	}
@@ -189,7 +189,7 @@ class eVoRenderer
 			for (int i = 0; i < trianglesNo; i++)
 			{
 				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
-				DrawWireTriangle(&vertices[0], eVoColor32::Green);
+				DrawWireTriangle(&vertices[0], Color32::Green);
 
 				if (i & 1)
 					vertices[0] = vertices[2];
@@ -215,7 +215,7 @@ class eVoRenderer
 			for (int i = 0; i < trianglesNo; i++)
 			{
 				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
-				DrawWireTriangle(&vertices[0], eVoColor32::Green);
+				DrawWireTriangle(&vertices[0], Color32::Green);
 				vertices[1] = vertices[2];
 			}
 		}
@@ -223,17 +223,17 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawPoint(Vertex4* vertices, eVoColor32 color)
+	private: void DrawPoint(Vertex4* vertices, Color32 color)
 	{
 		int x = vertices[0].x;
 		int y = vertices[0].y;
-		eVoColor32* address = FrameBuffer->GetPixelAddress(x, y);
+		Color32* address = FrameBuffer->GetPixelAddress(x, y);
 		*address = color;
 	}
 
 	 //---------------------------------------------------------------------------------------------------------
 
-	private: void DrawWireTriangle(Vertex4* vertices, eVoColor32 color)
+	private: void DrawWireTriangle(Vertex4* vertices, Color32 color)
 	{
 		DrawLine(&vertices[0], &vertices[1], color);
 		DrawLine(&vertices[1], &vertices[2], color);
@@ -242,7 +242,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawLine(Vertex4* vertex1, Vertex4* vertex2, eVoColor32 color)
+	private: void DrawLine(Vertex4* vertex1, Vertex4* vertex2, Color32 color)
 	{
 		int x1 = vertex1->x + 0.5f;
 		int y1 = vertex1->y + 0.5f;
@@ -335,7 +335,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawVerticalLine(int x, int y1, int y2, eVoColor32 color)
+	private: void DrawVerticalLine(int x, int y1, int y2, Color32 color)
 	{
 		int yMin, yMax;
 
@@ -351,7 +351,7 @@ class eVoRenderer
 		}
 
 		int screenWidth = FrameBuffer->GetWidth();
-		eVoColor32* address = FrameBuffer->GetPixelAddress(x, yMin);
+		Color32* address = FrameBuffer->GetPixelAddress(x, yMin);
 
 		for (int y = yMin; y <= yMax; y++)
 		{
@@ -362,7 +362,7 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawHorizontalLine(int x1, int x2, int y, eVoColor32 color)
+	private: void DrawHorizontalLine(int x1, int x2, int y, Color32 color)
 	{
 		int xMin, xMax;
 
@@ -377,7 +377,7 @@ class eVoRenderer
 			xMax = x1;
 		}
 
-		eVoColor32* address = FrameBuffer->GetPixelAddress(xMin, y);
+		Color32* address = FrameBuffer->GetPixelAddress(xMin, y);
 
 		for (int y = xMin; y <= xMax; y++)
 		{
@@ -388,9 +388,9 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	private: void DrawDiagonalLine(int x1, int y1, int x2, int y2, eVoColor32 color)
+	private: void DrawDiagonalLine(int x1, int y1, int x2, int y2, Color32 color)
 	{
-		eVoColor32* address = FrameBuffer->GetPixelAddress(x1, y1);
+		Color32* address = FrameBuffer->GetPixelAddress(x1, y1);
 		int screenWidth = FrameBuffer->GetWidth();
 
 		// Bresenham's line algorithm

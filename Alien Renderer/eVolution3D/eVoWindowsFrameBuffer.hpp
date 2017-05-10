@@ -118,7 +118,7 @@ template <typename PixelType> class eVoWindowsFrameBuffer : public eVoFrameBuffe
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: inline eVoColor32* GetBuffer() override
+	public: inline Color32* GetBuffer() override
 	{
 		return Buffer;
 	}
