@@ -4,7 +4,7 @@
 #include "eVolution3D/Constants.h"
 #include "eVolution3D/Color32.hpp"
 #include "eVolution3D/Vertex3.hpp"
-#include "eVolution3D/eVoVertexShader.hpp"
+#include "eVolution3D/VertexShader.hpp"
 #include "eVoShaderIOData.h"
 
 class eVoRenderer
