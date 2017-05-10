@@ -114,7 +114,7 @@
     <ClInclude Include="eVolution3D\Color32.hpp" />
     <ClInclude Include="eVolution3D\Constants.h" />
     <ClInclude Include="eVolution3D\Enums.h" />
-    <ClInclude Include="eVolution3D\FrameBuffer.h" />
+    <ClInclude Include="eVolution3D\FrameBuffer.hpp" />
     <ClInclude Include="eVolution3D\Math.hpp" />
     <ClInclude Include="eVolution3D\Matrix4x4.hpp" />
     <ClInclude Include="eVolution3D\Vertex3.hpp" />

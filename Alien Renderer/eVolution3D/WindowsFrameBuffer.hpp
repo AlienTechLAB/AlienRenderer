@@ -1,6 +1,6 @@
 #pragma once
 #include <windows.h>
-#include "FrameBuffer.h"
+#include "FrameBuffer.hpp"
 
 namespace eVolution3D
 {
@@ -33,6 +33,7 @@ namespace eVolution3D
 				BmpInfo = GetBitmapInfo(newWidth, newHeight);
 				Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
 				OldBitmap = SelectObject(MemoryContext, Bitmap);
+				UpdateAspectRatio();
 			}
 		}
 
@@ -48,6 +49,7 @@ namespace eVolution3D
 			Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
 			OldBitmap = SelectObject(MemoryContext, Bitmap);
 			ReleaseDC(windowHandle, deviceContext);
+			UpdateAspectRatio();
 		}
 
 		//---------------------------------------------------------------------------------------------------------

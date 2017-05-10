@@ -7,6 +7,9 @@ namespace eVolution3D
 	{
 		//---------------------------------------------------------------------------------------------------------
 
+		private:
+		float AspectRatio;
+
 		public:
 		virtual int GetWidth() = 0;
 		virtual int GetHeight() = 0;
@@ -16,6 +19,20 @@ namespace eVolution3D
 		virtual void OnResize(int newWidth, int newheight) = 0;
 		virtual void PutPixel(int x, int y, PixelType color) = 0;
 		virtual PixelType* GetPixelAddress(int x, int y) = 0;
+
+		//---------------------------------------------------------------------------------------------------------
+
+		protected: void UpdateAspectRatio()
+		{
+			AspectRatio = (float)GetWidth() / (float)GetHeight();
+		}
+
+		//---------------------------------------------------------------------------------------------------------
+
+		public: float GetAspectRatio()
+		{
+			return AspectRatio;
+		}
 
 		//---------------------------------------------------------------------------------------------------------
 	};

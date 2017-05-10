@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 #include <exception>
-#include "eVolution3D/FrameBuffer.h"
+#include "eVolution3D/FrameBuffer.hpp"
 #include "eVolution3D/Constants.h"
 #include "eVolution3D/Color32.hpp"
 #include "eVolution3D/Vertex3.hpp"
@@ -19,7 +19,7 @@ namespace eVolution3D
 		Vertex3* Vertices = NULL;
 		int VerticesNo = 0;
 		DrawingMode Mode = DrawingMode::POINT;
-		VertexShader* Shader = NULL;
+		VertexShader* VertShader = NULL;
 		ShaderIOData ShaderIOData;
 
 		//---------------------------------------------------------------------------------------------------------
@@ -55,10 +55,10 @@ namespace eVolution3D
 
 		public: void SetVertexShader(VertexShader* vertexShader)
 		{
-			if (Shader != NULL)
-				delete Shader;
+			if (VertShader != NULL)
+				delete VertShader;
 
-			Shader = vertexShader;
+			VertShader = vertexShader;
 		}
 
 		//---------------------------------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ namespace eVolution3D
 
 			for (int i = 0; i < VerticesNo; i++)
 			{
-				Shader->ProcessVertex(&Vertices[i], &vertex, ShaderIOData);
+				VertexOperations(&Vertices[i], &vertex);
 				DrawPoint(&vertex, Color32::Green);
 			}
 		}
@@ -112,8 +112,8 @@ namespace eVolution3D
 
 			for (int i = 0; i < linesNo; i++)
 			{
-				Shader->ProcessVertex(&Vertices[index++], &vertices[0], ShaderIOData);
-				Shader->ProcessVertex(&Vertices[index++], &vertices[1], ShaderIOData);
+				VertexOperations(&Vertices[index++], &vertices[0]);
+				VertexOperations(&Vertices[index++], &vertices[1]);
 				DrawLine(&vertices[0], &vertices[1], Color32::Green);
 			}
 		}
@@ -127,11 +127,11 @@ namespace eVolution3D
 
 			if (linesNo > 0)
 			{
-				Shader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
+				VertexOperations(&Vertices[0], &vertices[0]);
 
 				for (int i = 1; i < VerticesNo; i++)
 				{
-					Shader->ProcessVertex(&Vertices[i], &vertices[i], ShaderIOData);
+					VertexOperations(&Vertices[i], &vertices[i]);
 					DrawLine(&vertices[0], &vertices[1], Color32::Green);
 					vertices[0] = vertices[1];
 				}
@@ -148,8 +148,8 @@ namespace eVolution3D
 			{
 				for (int i = 0; i < VerticesNo; i++)
 				{
-					Shader->ProcessVertex(&Vertices[i], &vertices[0], ShaderIOData);
-					Shader->ProcessVertex(&Vertices[(i + 1) % VerticesNo], &vertices[1], ShaderIOData);
+					VertexOperations(&Vertices[i], &vertices[0]);
+					VertexOperations(&Vertices[(i + 1) % VerticesNo], &vertices[1]);
 					DrawLine(&vertices[0], &vertices[1], Color32::Green);
 				}
 			}
@@ -168,9 +168,9 @@ namespace eVolution3D
 
 				for (int i = 0; i < trianglesNo; i++)
 				{
-					Shader->ProcessVertex(&Vertices[index++], &vertices[0], ShaderIOData);
-					Shader->ProcessVertex(&Vertices[index++], &vertices[1], ShaderIOData);
-					Shader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
+					VertexOperations(&Vertices[index++], &vertices[0]);
+					VertexOperations(&Vertices[index++], &vertices[1]);
+					VertexOperations(&Vertices[index++], &vertices[2]);
 					DrawWireTriangle(&vertices[0], Color32::Green);
 				}
 			}
@@ -186,12 +186,12 @@ namespace eVolution3D
 
 			if (trianglesNo > 0)
 			{
-				Shader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
-				Shader->ProcessVertex(&Vertices[1], &vertices[1], ShaderIOData);
+				VertexOperations(&Vertices[0], &vertices[0]);
+				VertexOperations(&Vertices[1], &vertices[1]);
 
 				for (int i = 0; i < trianglesNo; i++)
 				{
-					Shader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
+					VertexOperations(&Vertices[index++], &vertices[2]);
 					DrawWireTriangle(&vertices[0], Color32::Green);
 
 					if (i & 1)
@@ -212,18 +212,32 @@ namespace eVolution3D
 
 			if (trianglesNo > 0)
 			{
-				Shader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
-				Shader->ProcessVertex(&Vertices[1], &vertices[1], ShaderIOData);
+				VertexOperations(&Vertices[0], &vertices[0]);
+				VertexOperations(&Vertices[1], &vertices[1]);
 
 				for (int i = 0; i < trianglesNo; i++)
 				{
-					Shader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
+					VertShader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
 					DrawWireTriangle(&vertices[0], Color32::Green);
 					vertices[1] = vertices[2];
 				}
 			}
 		}
 
+		//---------------------------------------------------------------------------------------------------------
+
+		private: void VertexOperations(Vertex3* vetrexIn, Vertex4* vertexOut)
+		{
+			VertShader->ProcessVertex(vetrexIn, vertexOut, ShaderIOData);
+			vertexOut->PerspectiveDivision();
+
+			// Viewport Transformation.
+			float halfWidth  = (float)(Frame->GetWidth() >> 1);
+			float halfHeight = (float)(Frame->GetHeight() >> 1);
+			vertexOut->x = (vertexOut->x / Frame->GetAspectRatio()) * halfWidth + halfWidth;
+			vertexOut->y = vertexOut->y * halfHeight + halfHeight;
+		}
+		
 		//---------------------------------------------------------------------------------------------------------
 
 		private: void DrawPoint(Vertex4* vertices, Color32 color)
