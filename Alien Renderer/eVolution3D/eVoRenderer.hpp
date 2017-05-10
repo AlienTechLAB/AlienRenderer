@@ -15,7 +15,7 @@ class eVoRenderer
 	eVoFrameBuffer<Color32>* FrameBuffer = NULL;
 	Vertex3* Vertices = NULL;
 	int VerticesNo = 0;
-	eVoDrawingMode DrawingMode = eVoDrawingMode::POINT;
+	DrawingMode Mode = DrawingMode::POINT;
 	eVoVertexShader* VertexShader = NULL;
 	eVoShaderIOData ShaderIOData;
 
@@ -36,9 +36,9 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetDrawingMode(eVoDrawingMode drawingMode)
+	public: void SetDrawingMode(DrawingMode drawingMode)
 	{
-		DrawingMode = drawingMode;
+		Mode = drawingMode;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -73,15 +73,15 @@ class eVoRenderer
 
 	public: void Render()
 	{
-		switch (DrawingMode)
+		switch (Mode)
 		{
-			case eVoDrawingMode::POINT: RenderPoints(); break;
-			case eVoDrawingMode::LINE: RenderLines(); break;
-			case eVoDrawingMode::LINE_STRIP: RenderLineStrip(); break;
-			case eVoDrawingMode::LINE_LOOP: RenderLineLoop(); break;
-			case eVoDrawingMode::WIRE_TRIANGLES: RenderWireTriangles(); break;
-			case eVoDrawingMode::TRIANGLE_STRIP: RenderWireTriangleStrip(); break;
-			case eVoDrawingMode::TRIANGLE_FAN: RenderWireTriangleFan(); break;
+			case DrawingMode::POINT: RenderPoints(); break;
+			case DrawingMode::LINE: RenderLines(); break;
+			case DrawingMode::LINE_STRIP: RenderLineStrip(); break;
+			case DrawingMode::LINE_LOOP: RenderLineLoop(); break;
+			case DrawingMode::WIRE_TRIANGLES: RenderWireTriangles(); break;
+			case DrawingMode::TRIANGLE_STRIP: RenderWireTriangleStrip(); break;
+			case DrawingMode::TRIANGLE_FAN: RenderWireTriangleFan(); break;
 			default: throw eVoException("Unknown DrawingMode");
 		}
 	}

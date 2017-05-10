@@ -113,7 +113,7 @@
     <ClInclude Include="Application\Application.hpp" />
     <ClInclude Include="eVolution3D\Color32.hpp" />
     <ClInclude Include="eVolution3D\Constants.h" />
-    <ClInclude Include="eVolution3D\eVoEnums.h" />
+    <ClInclude Include="eVolution3D\Enums.h" />
     <ClInclude Include="eVolution3D\eVoException.hpp" />
     <ClInclude Include="eVolution3D\eVoFrameBuffer.h" />
     <ClInclude Include="eVolution3D\eVoMath.hpp" />

@@ -35,7 +35,7 @@ class Application
 
 		Rednerer->SetTargetBuffer(FrameBuffer);
 		Rednerer->SetVertices(Vertices, 4);
-		Rednerer->SetDrawingMode(eVoDrawingMode::LINE_LOOP);
+		Rednerer->SetDrawingMode(DrawingMode::LINE_LOOP);
 		Rednerer->SetVertexShader(&VertexShader);
 	}
 

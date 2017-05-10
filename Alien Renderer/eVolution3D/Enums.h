@@ -1,11 +1,11 @@
 #pragma once
 
-enum class eVoAxis
+enum class Axis
 {
 	X, Y, Z
 };
 
-enum class eVoDrawingMode
+enum class DrawingMode
 {
 	POINT,
 	LINE,

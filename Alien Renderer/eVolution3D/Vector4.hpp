@@ -2,7 +2,7 @@
 #include <math.h> 
 #include "eVoException.hpp"
 #include "eVoMath.hpp"
-#include "eVoEnums.h"
+#include "Enums.h"
 
 struct Vector4
 {
@@ -154,25 +154,25 @@ struct Vector4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void Rotate(float angle, eVoAxis axis)
+	public: void Rotate(float angle, Axis axis)
 	{
 		float c;
 
 		switch (axis)
 		{
-			case eVoAxis::X:
+			case Axis::X:
 				c = y;
 				y = y * cos(angle) - z * sin(angle);
 				z = c * sin(angle) + z * cos(angle);
 				break;
 
-			case eVoAxis::Y:
+			case Axis::Y:
 				c = x;
 				x = z * sin(angle) + x * cos(angle);
 				z = z * cos(angle) - c * sin(angle);
 				break;
 
-			case eVoAxis::Z:
+			case Axis::Z:
 				c = x;
 				x = y * sin(angle) + x * cos(angle);
 				y = y * cos(angle) - c * sin(angle);
