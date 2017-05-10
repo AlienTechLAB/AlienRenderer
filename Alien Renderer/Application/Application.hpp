@@ -2,7 +2,7 @@
 #include <time.h>
 #include "eVolution3D/Renderer.hpp"
 #include "eVolution3D/Vertex3.hpp"
-#include "eVolution3D/eVoMatrix4x4.hpp"
+#include "eVolution3D/Matrix4x4.hpp"
 
 class Application
 {
@@ -43,18 +43,18 @@ class Application
 
 	public: void MainLoopUpdate()
 	{
-		eVoMatrix4x4 rotation;
+		Matrix4x4 rotation;
 		float t = clock() * 0.001f;
 		//rotation.SetYRotation(t1 * 0.001f);
 		rotation.SetEulerRotation(Vector3(0, 0, t));
 		
-		eVoMatrix4x4 translation;
+		Matrix4x4 translation;
 		translation.SetTranslation(Vector3(500, 500, 100));
 
-		eVoMatrix4x4 scale;
+		Matrix4x4 scale;
 		scale.SetScale(0.3f);
 
-		eVoMatrix4x4 mvp = translation * rotation * scale;
+		Matrix4x4 mvp = translation * rotation * scale;
 		Rednerer->SetMVPMatrix(mvp);
 	}
 

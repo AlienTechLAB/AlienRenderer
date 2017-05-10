@@ -3,7 +3,7 @@
 #include "Vector3.hpp"
 #include "Vertex4.hpp"
 
-struct eVoMatrix4x4
+struct Matrix4x4
 {
 	//---------------------------------------------------------------------------------------------------------
 
@@ -12,7 +12,7 @@ struct eVoMatrix4x4
 	
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoMatrix4x4()
+	public: Matrix4x4()
 	{
 		SetIdentity();
 	}
@@ -142,16 +142,16 @@ struct eVoMatrix4x4
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void operator*=(eVoMatrix4x4& m)
+	public: void operator*=(Matrix4x4& m)
 	{
 		*this = (*this * m);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: eVoMatrix4x4 operator*(eVoMatrix4x4& m)
+	public: Matrix4x4 operator*(Matrix4x4& m)
 	{
-		eVoMatrix4x4 n;
+		Matrix4x4 n;
 
 		n.M[0][0] = M[0][0] * m.M[0][0] + M[1][0] * m.M[0][1] + M[2][0] * m.M[0][2] + M[3][0] * m.M[0][3];
 		n.M[1][0] = M[0][0] * m.M[1][0] + M[1][0] * m.M[1][1] + M[2][0] * m.M[1][2] + M[3][0] * m.M[1][3];

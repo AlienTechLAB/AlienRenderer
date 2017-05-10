@@ -43,7 +43,7 @@ class Renderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetMVPMatrix(const eVoMatrix4x4& mvp)
+	public: void SetMVPMatrix(const Matrix4x4& mvp)
 	{
 		ShaderIOData.MVP = mvp;
 	}

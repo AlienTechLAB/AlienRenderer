@@ -24,9 +24,6 @@
     <ClInclude Include="eVolution3D\eVoMath.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="eVolution3D\eVoMatrix4x4.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="eVolution3D\Vertex4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -61,6 +58,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eVolution3D\Renderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\Matrix4x4.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

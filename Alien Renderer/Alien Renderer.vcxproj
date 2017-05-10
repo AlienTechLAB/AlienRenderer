@@ -117,7 +117,7 @@
     <ClInclude Include="eVolution3D\eVoException.hpp" />
     <ClInclude Include="eVolution3D\FrameBuffer.h" />
     <ClInclude Include="eVolution3D\eVoMath.hpp" />
-    <ClInclude Include="eVolution3D\eVoMatrix4x4.hpp" />
+    <ClInclude Include="eVolution3D\Matrix4x4.hpp" />
     <ClInclude Include="eVolution3D\Vertex3.hpp" />
     <ClInclude Include="eVolution3D\Vertex4.hpp" />
     <ClInclude Include="eVolution3D\Renderer.hpp" />
