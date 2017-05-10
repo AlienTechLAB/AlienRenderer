@@ -3,7 +3,7 @@
 #include "Vertex4.hpp"
 #include "eVoShaderIOData.h"
 
-class eVoVertexShader
+class VertexShader
 {
 	//---------------------------------------------------------------------------------------------------------
 	
@@ -15,7 +15,7 @@ class eVoVertexShader
 	//---------------------------------------------------------------------------------------------------------
 };
 
-class eVoVertexShaderMVP : public eVoVertexShader
+class VertexShaderMVP : public VertexShader
 {
 	//---------------------------------------------------------------------------------------------------------
 

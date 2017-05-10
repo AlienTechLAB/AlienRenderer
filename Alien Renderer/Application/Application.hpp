@@ -12,7 +12,7 @@ class Application
 	FrameBuffer<Color32>* Frame = NULL;
 	eVoRenderer* Rednerer = NULL;
 	Vertex3*  Vertices = NULL;
-	eVoVertexShaderMVP VertexShader;
+	VertexShaderMVP Shader;
 
 	//---------------------------------------------------------------------------------------------------------
 
@@ -36,7 +36,7 @@ class Application
 		Rednerer->SetTargetBuffer(Frame);
 		Rednerer->SetVertices(Vertices, 4);
 		Rednerer->SetDrawingMode(DrawingMode::LINE_LOOP);
-		Rednerer->SetVertexShader(&VertexShader);
+		Rednerer->SetVertexShader(&Shader);
 	}
 
 	//---------------------------------------------------------------------------------------------------------

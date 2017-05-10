@@ -16,7 +16,7 @@ class eVoRenderer
 	Vertex3* Vertices = NULL;
 	int VerticesNo = 0;
 	DrawingMode Mode = DrawingMode::POINT;
-	eVoVertexShader* VertexShader = NULL;
+	VertexShader* Shader = NULL;
 	eVoShaderIOData ShaderIOData;
 
 	//---------------------------------------------------------------------------------------------------------
@@ -50,12 +50,12 @@ class eVoRenderer
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetVertexShader(eVoVertexShader* vertexShader)
+	public: void SetVertexShader(VertexShader* vertexShader)
 	{
-		if (VertexShader != NULL)
-			delete VertexShader;
+		if (Shader != NULL)
+			delete Shader;
 
-		VertexShader = vertexShader;
+		Shader = vertexShader;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ class eVoRenderer
 
 		for (int i = 0; i < VerticesNo; i ++)
 		{
-			VertexShader->ProcessVertex(&Vertices[i], &vertex, ShaderIOData);
+			Shader->ProcessVertex(&Vertices[i], &vertex, ShaderIOData);
 			DrawPoint(&vertex, Color32::Green);
 		}
 	}
@@ -109,8 +109,8 @@ class eVoRenderer
 
 		for (int i = 0; i < linesNo; i++)
 		{
-			VertexShader->ProcessVertex(&Vertices[index++], &vertices[0], ShaderIOData);
-			VertexShader->ProcessVertex(&Vertices[index++], &vertices[1], ShaderIOData);
+			Shader->ProcessVertex(&Vertices[index++], &vertices[0], ShaderIOData);
+			Shader->ProcessVertex(&Vertices[index++], &vertices[1], ShaderIOData);
 			DrawLine(&vertices[0], &vertices[1], Color32::Green);
 		}
 	}
@@ -124,11 +124,11 @@ class eVoRenderer
 
 		if (linesNo > 0)
 		{
-			VertexShader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
+			Shader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
 
 			for (int i = 1; i < VerticesNo; i++)
 			{
-				VertexShader->ProcessVertex(&Vertices[i], &vertices[i], ShaderIOData);
+				Shader->ProcessVertex(&Vertices[i], &vertices[i], ShaderIOData);
 				DrawLine(&vertices[0], &vertices[1], Color32::Green);
 				vertices[0] = vertices[1];
 			}
@@ -145,8 +145,8 @@ class eVoRenderer
 		{
 			for (int i = 0; i < VerticesNo; i++)
 			{
-				VertexShader->ProcessVertex(&Vertices[i], &vertices[0], ShaderIOData);
-				VertexShader->ProcessVertex(&Vertices[(i + 1) % VerticesNo], &vertices[1], ShaderIOData);
+				Shader->ProcessVertex(&Vertices[i], &vertices[0], ShaderIOData);
+				Shader->ProcessVertex(&Vertices[(i + 1) % VerticesNo], &vertices[1], ShaderIOData);
 				DrawLine(&vertices[0], &vertices[1], Color32::Green);
 			}
 		}
@@ -165,9 +165,9 @@ class eVoRenderer
 
 			for (int i = 0; i < trianglesNo; i++)
 			{
-				VertexShader->ProcessVertex(&Vertices[index++], &vertices[0], ShaderIOData);
-				VertexShader->ProcessVertex(&Vertices[index++], &vertices[1], ShaderIOData);
-				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
+				Shader->ProcessVertex(&Vertices[index++], &vertices[0], ShaderIOData);
+				Shader->ProcessVertex(&Vertices[index++], &vertices[1], ShaderIOData);
+				Shader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
 				DrawWireTriangle(&vertices[0], Color32::Green);
 			}
 		}
@@ -183,12 +183,12 @@ class eVoRenderer
 
 		if (trianglesNo > 0)
 		{
-			VertexShader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
-			VertexShader->ProcessVertex(&Vertices[1], &vertices[1], ShaderIOData);
+			Shader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
+			Shader->ProcessVertex(&Vertices[1], &vertices[1], ShaderIOData);
 
 			for (int i = 0; i < trianglesNo; i++)
 			{
-				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
+				Shader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
 				DrawWireTriangle(&vertices[0], Color32::Green);
 
 				if (i & 1)
@@ -209,12 +209,12 @@ class eVoRenderer
 
 		if (trianglesNo > 0)
 		{
-			VertexShader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
-			VertexShader->ProcessVertex(&Vertices[1], &vertices[1], ShaderIOData);
+			Shader->ProcessVertex(&Vertices[0], &vertices[0], ShaderIOData);
+			Shader->ProcessVertex(&Vertices[1], &vertices[1], ShaderIOData);
 
 			for (int i = 0; i < trianglesNo; i++)
 			{
-				VertexShader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
+				Shader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
 				DrawWireTriangle(&vertices[0], Color32::Green);
 				vertices[1] = vertices[2];
 			}
