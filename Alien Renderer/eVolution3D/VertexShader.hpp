@@ -3,26 +3,29 @@
 #include "Vertex4.hpp"
 #include "ShaderIOData.h"
 
-class VertexShader
+namespace eVolution3D
 {
-	//---------------------------------------------------------------------------------------------------------
-	
-	public: virtual void ProcessVertex(Vertex3* vetrexIn, Vertex4* vertexOut, ShaderIOData& shaderIOData)
+	class VertexShader
 	{
-		*vertexOut = *vetrexIn;
-	}
+		//---------------------------------------------------------------------------------------------------------
 
-	//---------------------------------------------------------------------------------------------------------
-};
+		public: virtual void ProcessVertex(Vertex3* vetrexIn, Vertex4* vertexOut, ShaderIOData& shaderIOData)
+		{
+			*vertexOut = *vetrexIn;
+		}
 
-class VertexShaderMVP : public VertexShader
-{
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
+	};
 
-	public: void ProcessVertex(Vertex3* vetrexIn, Vertex4* vertexOut, ShaderIOData& shaderIOData) override
+	class VertexShaderMVP : public VertexShader
 	{
-		*vertexOut = shaderIOData.MVP * (*vetrexIn);
-	}
+		//---------------------------------------------------------------------------------------------------------
 
-	//---------------------------------------------------------------------------------------------------------
-};
+		public: void ProcessVertex(Vertex3* vetrexIn, Vertex4* vertexOut, ShaderIOData& shaderIOData) override
+		{
+			*vertexOut = shaderIOData.MVP * (*vetrexIn);
+		}
+
+		//---------------------------------------------------------------------------------------------------------
+	};
+}

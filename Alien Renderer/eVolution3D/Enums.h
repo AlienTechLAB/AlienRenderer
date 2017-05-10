@@ -1,17 +1,20 @@
 #pragma once
 
-enum class Axis
+namespace eVolution3D
 {
-	X, Y, Z
-};
+	enum class Axis
+	{
+		X, Y, Z
+	};
 
-enum class DrawingMode
-{
-	POINT,
-	LINE,
-	LINE_STRIP,
-	LINE_LOOP,
-	WIRE_TRIANGLES,
-	TRIANGLE_STRIP,
-	TRIANGLE_FAN
-};
+	enum class DrawingMode
+	{
+		POINT,
+		LINE,
+		LINE_STRIP,
+		LINE_LOOP,
+		WIRE_TRIANGLES,
+		TRIANGLE_STRIP,
+		TRIANGLE_FAN
+	};
+}

@@ -4,6 +4,8 @@
 #include "eVolution3D/Vertex3.hpp"
 #include "eVolution3D/Matrix4x4.hpp"
 
+using namespace eVolution3D;
+
 class Application
 {
 	//---------------------------------------------------------------------------------------------------------

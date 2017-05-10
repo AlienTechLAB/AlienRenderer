@@ -12,12 +12,14 @@
 #define WIDTH 1024
 #define HEIGHT 768
 
+using namespace eVolution3D;
+
 HWND WindowHandle;
 bool FullScreen = false;
 RECT OldWindowMode;
 bool QuitApplication = false;
 
-WindowsFrameBuffer<Color32> FrameBuffer;
+WindowsFrameBuffer<Color32> Frame;
 Application Demo;
 
 //---------------------------------------------------------------------------------------------------------
@@ -32,7 +34,7 @@ void OnWMPaint(HWND windowHandle)
 	clock_t t2 = clock();
 
 	HDC deviceContext = GetDC(windowHandle);
-	BitBlt(deviceContext, 0, 0, FrameBuffer.GetWidth(), FrameBuffer.GetHeight(), FrameBuffer.GetMemoryContext(), 0, 0, SRCCOPY);
+	BitBlt(deviceContext, 0, 0, Frame.GetWidth(), Frame.GetHeight(), Frame.GetMemoryContext(), 0, 0, SRCCOPY);
 
 	SetBkMode(deviceContext, TRANSPARENT);
 	SetTextColor(deviceContext, 0x00FFFFFF);
@@ -40,7 +42,7 @@ void OnWMPaint(HWND windowHandle)
 	float frameTime = ((float)timeDifference) / (float)CLOCKS_PER_SEC;
 	int fps = (int)(1.0f / frameTime);
 
-	std::string text = "FPS: " + std::to_string(fps) + " Res: " + std::to_string(FrameBuffer.GetWidth()) + "x" + std::to_string(FrameBuffer.GetHeight());
+	std::string text = "FPS: " + std::to_string(fps) + " Res: " + std::to_string(Frame.GetWidth()) + "x" + std::to_string(Frame.GetHeight());
 	//TextOut(deviceContext, 0, 0, text.c_str(), (int)text.length());
 	ReleaseDC(windowHandle, deviceContext);
 
@@ -81,7 +83,7 @@ LONG WINAPI WindowProc(HWND windowHandle, UINT uMsg, WPARAM wParam, LPARAM lPara
 		case WM_SIZE:
 			RECT windowRect;
 			GetClientRect(windowHandle, &windowRect);
-			FrameBuffer.OnResize(windowRect.right, windowRect.bottom);
+			Frame.OnResize(windowRect.right, windowRect.bottom);
 			PostMessage(windowHandle, WM_PAINT, 0, 0);
 			return 0;
 
@@ -218,8 +220,8 @@ int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpsz
 		{
 			if (DefinePixelFormat())
 			{
-				FrameBuffer.Init(WindowHandle);
-				Demo.SetFrameBuffer(&FrameBuffer);
+				Frame.Init(WindowHandle);
+				Demo.SetFrameBuffer(&Frame);
 				Demo.Start();
 
 				// Main loop
@@ -241,7 +243,7 @@ int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpsz
 
 				// Release
 				Demo.Release();
-				FrameBuffer.Release();
+				Frame.Release();
 				DestroyWindow(WindowHandle);
 			}
 		}

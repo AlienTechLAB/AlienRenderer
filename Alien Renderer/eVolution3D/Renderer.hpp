@@ -8,26 +8,28 @@
 #include "eVolution3D/VertexShader.hpp"
 #include "eVolution3D/ShaderIOData.h"
 
-class Renderer
+namespace eVolution3D
 {
-	//---------------------------------------------------------------------------------------------------------
+	class Renderer
+	{
+		//---------------------------------------------------------------------------------------------------------
 
 	private:
-	FrameBuffer<Color32>* Frame = NULL;
-	Vertex3* Vertices = NULL;
-	int VerticesNo = 0;
-	DrawingMode Mode = DrawingMode::POINT;
-	VertexShader* Shader = NULL;
-	ShaderIOData ShaderIOData;
+		FrameBuffer<Color32>* Frame = NULL;
+		Vertex3* Vertices = NULL;
+		int VerticesNo = 0;
+		DrawingMode Mode = DrawingMode::POINT;
+		VertexShader* Shader = NULL;
+		ShaderIOData ShaderIOData;
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
 	public: void SetTargetBuffer(FrameBuffer<Color32>* frameBuffer)
 	{
 		Frame = frameBuffer;
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------
 
 	public: void SetVertices(Vertex3* vertices, int verticesNo)
 	{
@@ -35,21 +37,21 @@ class Renderer
 		VerticesNo = verticesNo;
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------
 
 	public: void SetDrawingMode(DrawingMode drawingMode)
 	{
 		Mode = drawingMode;
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------
 
 	public: void SetMVPMatrix(const Matrix4x4& mvp)
 	{
 		ShaderIOData.MVP = mvp;
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------
 
 	public: void SetVertexShader(VertexShader* vertexShader)
 	{
@@ -59,7 +61,7 @@ class Renderer
 		Shader = vertexShader;
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------
 
 	public: void ClearBufferWithColor(Color32 color)
 	{
@@ -70,37 +72,37 @@ class Renderer
 			buffer[i] = color;
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------
 
 	public: void Render()
 	{
 		switch (Mode)
 		{
-			case DrawingMode::POINT: RenderPoints(); break;
-			case DrawingMode::LINE: RenderLines(); break;
-			case DrawingMode::LINE_STRIP: RenderLineStrip(); break;
-			case DrawingMode::LINE_LOOP: RenderLineLoop(); break;
-			case DrawingMode::WIRE_TRIANGLES: RenderWireTriangles(); break;
-			case DrawingMode::TRIANGLE_STRIP: RenderWireTriangleStrip(); break;
-			case DrawingMode::TRIANGLE_FAN: RenderWireTriangleFan(); break;
-			default: throw std::exception("Unknown DrawingMode");
+		case DrawingMode::POINT: RenderPoints(); break;
+		case DrawingMode::LINE: RenderLines(); break;
+		case DrawingMode::LINE_STRIP: RenderLineStrip(); break;
+		case DrawingMode::LINE_LOOP: RenderLineLoop(); break;
+		case DrawingMode::WIRE_TRIANGLES: RenderWireTriangles(); break;
+		case DrawingMode::TRIANGLE_STRIP: RenderWireTriangleStrip(); break;
+		case DrawingMode::TRIANGLE_FAN: RenderWireTriangleFan(); break;
+		default: throw std::exception("Unknown DrawingMode");
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------
 
 	private: void RenderPoints()
 	{
 		Vertex4 vertex;
 
-		for (int i = 0; i < VerticesNo; i ++)
+		for (int i = 0; i < VerticesNo; i++)
 		{
 			Shader->ProcessVertex(&Vertices[i], &vertex, ShaderIOData);
 			DrawPoint(&vertex, Color32::Green);
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void RenderLines()
 	{
@@ -116,7 +118,7 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void RenderLineStrip()
 	{
@@ -136,12 +138,12 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void RenderLineLoop()
 	{
 		Vertex4 vertices[2];
-		
+
 		if (VerticesNo > 2)
 		{
 			for (int i = 0; i < VerticesNo; i++)
@@ -153,7 +155,7 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void RenderWireTriangles()
 	{
@@ -174,7 +176,7 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void RenderWireTriangleStrip()
 	{
@@ -200,7 +202,7 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void RenderWireTriangleFan()
 	{
@@ -222,7 +224,7 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void DrawPoint(Vertex4* vertices, Color32 color)
 	{
@@ -232,7 +234,7 @@ class Renderer
 		*address = color;
 	}
 
-	 //---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void DrawWireTriangle(Vertex4* vertices, Color32 color)
 	{
@@ -241,7 +243,7 @@ class Renderer
 		DrawLine(&vertices[2], &vertices[0], color);
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void DrawLine(Vertex4* vertex1, Vertex4* vertex2, Color32 color)
 	{
@@ -279,10 +281,10 @@ class Renderer
 			else
 			{
 				// It's vertical line
-				     if (y1 < 0) y1 = 0;
+				if (y1 < 0) y1 = 0;
 				else if (y1 > t) y1 = t;
 
-				     if (y2 < 0) y2 = 0;
+				if (y2 < 0) y2 = 0;
 				else if (y2 > t) y2 = t;
 
 				DrawVerticalLine(x1, y1, y2, color);
@@ -292,10 +294,10 @@ class Renderer
 		else if (y1 == y2)
 		{
 			// It's horizontal line
-			     if (x1 < 0) x1 = 0;
+			if (x1 < 0) x1 = 0;
 			else if (x1 > r) x1 = r;
 
-			     if (x2 < 0) x2 = 0;
+			if (x2 < 0) x2 = 0;
 			else if (x2 > r) x2 = r;
 
 			DrawHorizontalLine(x1, x2, y1, color);
@@ -309,20 +311,20 @@ class Renderer
 			// y = (dy / dx) * (x - x1) + y1
 			// x = (y - y1) * (dx / dy) + x1
 
-			     if (x1 < 0) { y1 = (dy * -x1) / dx + y1; x1 = 0; }
+			if (x1 < 0) { y1 = (dy * -x1) / dx + y1; x1 = 0; }
 			else if (x1 > r) { y1 = (dy * (r - x1)) / dx + y1; x1 = r; }
 
-			     if (y1 < 0) { x1 = (-y1 * dx) / dy + x1; y1 = 0; }
+			if (y1 < 0) { x1 = (-y1 * dx) / dy + x1; y1 = 0; }
 			else if (y1 > t) { x1 = ((t - y1) * dx) / dy + x1; y1 = t; }
 
 			if (x1 < 0 || x1 > r || y1 < 0 || y1 > t)
 				return;
 
 
-			     if (x2 < 0) { y2 = (dy * -x1) / dx + y1; x2 = 0; }
+			if (x2 < 0) { y2 = (dy * -x1) / dx + y1; x2 = 0; }
 			else if (x2 > r) { y2 = (dy * (r - x1)) / dx + y1; x2 = r; }
 
-			     if (y2 < 0) { x2 = (-y1 * dx) / dy + x1; y2 = 0; }
+			if (y2 < 0) { x2 = (-y1 * dx) / dy + x1; y2 = 0; }
 			else if (y2 > t) { x2 = ((t - y1) * dx) / dy + x1; y2 = t; }
 
 			if (x2 < 0 || x2 > r || y2 < 0 || y2 > t)
@@ -334,7 +336,7 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void DrawVerticalLine(int x, int y1, int y2, Color32 color)
 	{
@@ -361,7 +363,7 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void DrawHorizontalLine(int x1, int x2, int y, Color32 color)
 	{
@@ -387,7 +389,7 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
+			 //---------------------------------------------------------------------------------------------------------
 
 	private: void DrawDiagonalLine(int x1, int y1, int x2, int y2, Color32 color)
 	{
@@ -438,5 +440,6 @@ class Renderer
 		}
 	}
 
-	//---------------------------------------------------------------------------------------------------------
-};
+			 //---------------------------------------------------------------------------------------------------------
+	};
+}

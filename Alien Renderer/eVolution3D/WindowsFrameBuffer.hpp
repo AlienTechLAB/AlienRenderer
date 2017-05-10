@@ -2,148 +2,151 @@
 #include <windows.h>
 #include "FrameBuffer.h"
 
-template <typename PixelType> class WindowsFrameBuffer : public FrameBuffer<PixelType>
+namespace eVolution3D
 {
-	//---------------------------------------------------------------------------------------------------------
-
-	private:
-	BITMAPINFO BmpInfo;
-	PixelType* Buffer = NULL;
-	HDC MemoryContext;
-	HBITMAP Bitmap;
-	HGDIOBJ OldBitmap;
-
-	//---------------------------------------------------------------------------------------------------------
-
-	public: ~WindowsFrameBuffer()
+	template <typename PixelType> class WindowsFrameBuffer : public FrameBuffer<PixelType>
 	{
-		Release();
-	}
+		//---------------------------------------------------------------------------------------------------------
 
-	//---------------------------------------------------------------------------------------------------------
+		private:
+		BITMAPINFO BmpInfo;
+		PixelType* Buffer = NULL;
+		HDC MemoryContext;
+		HBITMAP Bitmap;
+		HGDIOBJ OldBitmap;
 
-	public: void OnResize(int newWidth, int newHeight) override
-	{
-		if (Bitmap != NULL)
+		//---------------------------------------------------------------------------------------------------------
+
+		public: ~WindowsFrameBuffer()
 		{
-			SelectObject(MemoryContext, OldBitmap);
-			DeleteObject(Bitmap);
-			BmpInfo = GetBitmapInfo(newWidth, newHeight);
+			Release();
+		}
+
+		//---------------------------------------------------------------------------------------------------------
+
+		public: void OnResize(int newWidth, int newHeight) override
+		{
+			if (Bitmap != NULL)
+			{
+				SelectObject(MemoryContext, OldBitmap);
+				DeleteObject(Bitmap);
+				BmpInfo = GetBitmapInfo(newWidth, newHeight);
+				Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
+				OldBitmap = SelectObject(MemoryContext, Bitmap);
+			}
+		}
+
+		//---------------------------------------------------------------------------------------------------------
+
+		public: void Init(HWND windowHandle)
+		{
+			RECT windowRect;
+			GetClientRect(windowHandle, &windowRect);
+			HDC deviceContext = GetDC(windowHandle);
+			MemoryContext = CreateCompatibleDC(deviceContext);
+			BmpInfo = GetBitmapInfo(windowRect.right, windowRect.bottom);
 			Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
 			OldBitmap = SelectObject(MemoryContext, Bitmap);
+			ReleaseDC(windowHandle, deviceContext);
 		}
-	}
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
-	public: void Init(HWND windowHandle)
-	{
-		RECT windowRect;
-		GetClientRect(windowHandle, &windowRect);
-		HDC deviceContext = GetDC(windowHandle);
-		MemoryContext = CreateCompatibleDC(deviceContext);
-		BmpInfo = GetBitmapInfo(windowRect.right, windowRect.bottom);
-		Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
-		OldBitmap = SelectObject(MemoryContext, Bitmap);
-		ReleaseDC(windowHandle, deviceContext);
-	}
-
-	//---------------------------------------------------------------------------------------------------------
-
-	private: BITMAPINFO GetBitmapInfo(int width, int height)
-	{
-		BITMAPINFO bmpInfo;
-
-		bmpInfo.bmiHeader.biSize = sizeof(BmpInfo);
-		bmpInfo.bmiHeader.biWidth = width;
-		bmpInfo.bmiHeader.biHeight = height;
-		bmpInfo.bmiHeader.biPlanes = 1;
-		bmpInfo.bmiHeader.biBitCount = 32;
-		bmpInfo.bmiHeader.biCompression = BI_RGB;
-		bmpInfo.bmiHeader.biSizeImage = ((width * (bmpInfo.bmiHeader.biBitCount / 8) + 3) & -4) * height;
-
-		return bmpInfo;
-	}
-
-	//---------------------------------------------------------------------------------------------------------
-
-	public: void Release()
-	{
-		if (OldBitmap != NULL)
+		private: BITMAPINFO GetBitmapInfo(int width, int height)
 		{
-			SelectObject(MemoryContext, OldBitmap);
-			OldBitmap = NULL;
+			BITMAPINFO bmpInfo;
+
+			bmpInfo.bmiHeader.biSize = sizeof(BmpInfo);
+			bmpInfo.bmiHeader.biWidth = width;
+			bmpInfo.bmiHeader.biHeight = height;
+			bmpInfo.bmiHeader.biPlanes = 1;
+			bmpInfo.bmiHeader.biBitCount = 32;
+			bmpInfo.bmiHeader.biCompression = BI_RGB;
+			bmpInfo.bmiHeader.biSizeImage = ((width * (bmpInfo.bmiHeader.biBitCount / 8) + 3) & -4) * height;
+
+			return bmpInfo;
 		}
 
-		if (Bitmap != NULL)
+		 //---------------------------------------------------------------------------------------------------------
+
+		public: void Release()
 		{
-			DeleteObject(Bitmap);
-			Bitmap = NULL;
+			if (OldBitmap != NULL)
+			{
+				SelectObject(MemoryContext, OldBitmap);
+				OldBitmap = NULL;
+			}
+
+			if (Bitmap != NULL)
+			{
+				DeleteObject(Bitmap);
+				Bitmap = NULL;
+			}
+
+			if (MemoryContext != NULL)
+			{
+				DeleteDC(MemoryContext);
+				MemoryContext = NULL;
+			}
 		}
 
-		if (MemoryContext != NULL)
+		//---------------------------------------------------------------------------------------------------------
+
+		public: inline int GetWidth() override
 		{
-			DeleteDC(MemoryContext);
-			MemoryContext = NULL;
+			return BmpInfo.bmiHeader.biWidth;
 		}
-	}
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
-	public: inline int GetWidth() override
-	{
-		return BmpInfo.bmiHeader.biWidth;
-	}
+		public: inline int GetHeight() override
+		{
+			return BmpInfo.bmiHeader.biHeight;
+		}
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
-	public: inline int GetHeight() override
-	{
-		return BmpInfo.bmiHeader.biHeight;
-	}
+		public: inline int GetBufferSizeInBytes() override
+		{
+			return BmpInfo.bmiHeader.biSizeImage;
+		}
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
-	public: inline int GetBufferSizeInBytes() override
-	{
-		return BmpInfo.bmiHeader.biSizeImage;
-	}
+		public: inline int GetBufferSizeInPixels() override
+		{
+			return BmpInfo.bmiHeader.biSizeImage >> 2;
+		}
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
-	public: inline int GetBufferSizeInPixels() override
-	{
-		return BmpInfo.bmiHeader.biSizeImage >> 2;
-	}
+		public: inline Color32* GetBuffer() override
+		{
+			return Buffer;
+		}
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
-	public: inline Color32* GetBuffer() override
-	{
-		return Buffer;
-	}
+		public: HDC GetMemoryContext()
+		{
+			return MemoryContext;
+		}
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
-	public: HDC GetMemoryContext()
-	{
-		return MemoryContext;
-	}
+		public: inline void PutPixel(int x, int y, PixelType color) override
+		{
+			PixelType* address = GetPixelAddress(x, y);
+			*address = color;
+		}
 
-	//---------------------------------------------------------------------------------------------------------
+		//---------------------------------------------------------------------------------------------------------
 
-	public: inline void PutPixel(int x, int y, PixelType color) override
-	{
-		PixelType* address = GetPixelAddress(x, y);
-		*address = color;
-	}
+		public: inline PixelType* GetPixelAddress(int x, int y) override
+		{
+			return &Buffer[(BmpInfo.bmiHeader.biWidth * y) + x];
+		}
 
-	//---------------------------------------------------------------------------------------------------------
-
-	public: inline PixelType* GetPixelAddress(int x, int y) override
-	{
-		return &Buffer[(BmpInfo.bmiHeader.biWidth * y) + x];
-	}
-
-	//---------------------------------------------------------------------------------------------------------
-};
+		//---------------------------------------------------------------------------------------------------------
+	};
+}

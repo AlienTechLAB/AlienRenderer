@@ -1,12 +1,15 @@
 #pragma once
 
-// Fast inverse square root - Carmack's hack
-inline float InvSqrt(float value)
+namespace eVolution3D
 {
-	unsigned int i = *((unsigned int*)&value);
-	i = 0x5f3759df - (i >> 1);
+	// Fast inverse square root - Carmack's hack
+	inline float InvSqrt(float value)
+	{
+		unsigned int i = *((unsigned int*)&value);
+		i = 0x5f3759df - (i >> 1);
 
-	float f = *((float*)&i);
-	f = f * (1.5f - 0.5f * value * f * f);
-	return f;
+		float f = *((float*)&i);
+		f = f * (1.5f - 0.5f * value * f * f);
+		return f;
+	}
 }
