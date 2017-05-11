@@ -1,4 +1,8 @@
 #pragma once
+#include "Constants.h"
+
+#define DegToRad(a)((a * PI_NUMBER) / 180.0f)
+#define RadToDeg(r)((r * 180.0f) / PI_NUMBER))
 
 namespace eVolution3D
 {

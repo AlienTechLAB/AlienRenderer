@@ -217,7 +217,7 @@ namespace eVolution3D
 
 				for (int i = 0; i < trianglesNo; i++)
 				{
-					VertShader->ProcessVertex(&Vertices[index++], &vertices[2], ShaderIOData);
+					VertexOperations(&Vertices[index++], &vertices[2]);
 					DrawWireTriangle(&vertices[0], Color32::Green);
 					vertices[1] = vertices[2];
 				}
@@ -230,14 +230,19 @@ namespace eVolution3D
 		{
 			VertShader->ProcessVertex(vetrexIn, vertexOut, ShaderIOData);
 			vertexOut->PerspectiveDivision();
+			ViewportTransformation(vertexOut);
+		}
 
-			// Viewport Transformation.
+		//---------------------------------------------------------------------------------------------------------
+
+		private: void ViewportTransformation(Vertex4* vertex)
+		{
 			float halfWidth  = (float)(Frame->GetWidth() >> 1);
 			float halfHeight = (float)(Frame->GetHeight() >> 1);
-			vertexOut->x = (vertexOut->x / Frame->GetAspectRatio()) * halfWidth + halfWidth;
-			vertexOut->y = vertexOut->y * halfHeight + halfHeight;
+			vertex->x = (vertex->x / Frame->GetAspectRatio()) * halfWidth + halfWidth;
+			vertex->y = vertex->y * halfHeight + halfHeight;
 		}
-		
+
 		//---------------------------------------------------------------------------------------------------------
 
 		private: void DrawPoint(Vertex4* vertices, Color32 color)
