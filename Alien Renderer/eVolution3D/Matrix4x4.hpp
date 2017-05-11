@@ -44,6 +44,8 @@ namespace eVolution3D
 
 		public: void SetFrustumProjection(float l, float r, float b, float t, float n, float f)
 		{
+			// Based on: http://www.songho.ca/opengl/gl_projectionmatrix.html
+
 			SetZero();
 			M[0][0] = (2.0f * n) / (r - l);
 			M[2][0] = -((r + l) / (r - l));
@@ -58,6 +60,8 @@ namespace eVolution3D
 
 		public: void SetOrthogonalProjection(float l, float r, float b, float t, float n, float f)
 		{
+			// Based on: http://www.songho.ca/opengl/gl_projectionmatrix.html
+
 			SetZero();
 			M[0][0] = 2.0f / (r - l);
 			M[2][0] = -((r + l) / (r - l));
