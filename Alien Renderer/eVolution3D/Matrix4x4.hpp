@@ -56,6 +56,20 @@ namespace eVolution3D
 
 		//---------------------------------------------------------------------------------------------------------
 
+		public: void SetOrthogonalProjection(float l, float r, float b, float t, float n, float f)
+		{
+			SetZero();
+			M[0][0] = 2.0f / (r - l);
+			M[2][0] = -((r + l) / (r - l));
+			M[1][1] = 2.0f / (t - b);
+			M[2][1] = -((t + b) / (t - b));
+			M[2][2] = f / (f - n);
+			M[3][2] = -2.0f / (f - n);
+			M[3][3] = 1;
+		}
+
+		//---------------------------------------------------------------------------------------------------------
+
 		public: void SetEulerRotation(Vector3& eulerAngles)
 		{
 			float sx = sin(eulerAngles.x);
