@@ -3,7 +3,7 @@
 
 namespace eVolution3D
 {
-	struct ShaderIOData
+	struct UniformVariables
 	{
 		//---------------------------------------------------------------------------------------------------------
 

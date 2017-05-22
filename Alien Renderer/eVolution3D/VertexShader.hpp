@@ -1,7 +1,7 @@
 #pragma once
-#include "Vertex3.hpp"
-#include "Vertex4.hpp"
-#include "ShaderIOData.h"
+#include "eVolution3D/Vertex3.hpp"
+#include "eVolution3D/Vertex4.hpp"
+#include "eVolution3D/UniformVariables.h"
 
 namespace eVolution3D
 {
@@ -9,7 +9,7 @@ namespace eVolution3D
 	{
 		//---------------------------------------------------------------------------------------------------------
 
-		public: virtual void ProcessVertex(Vertex3* vetrexIn, Vertex4* vertexOut, ShaderIOData& shaderIOData)
+		public: virtual void ProcessVertex(Vertex3* vetrexIn, Vertex4* vertexOut, UniformVariables& shaderIOData)
 		{
 			*vertexOut = *vetrexIn;
 		}
@@ -21,7 +21,7 @@ namespace eVolution3D
 	{
 		//---------------------------------------------------------------------------------------------------------
 
-		public: void ProcessVertex(Vertex3* vetrexIn, Vertex4* vertexOut, ShaderIOData& shaderIOData) override
+		public: void ProcessVertex(Vertex3* vetrexIn, Vertex4* vertexOut, UniformVariables& shaderIOData) override
 		{
 			*vertexOut = shaderIOData.MVP * (*vetrexIn);
 		}

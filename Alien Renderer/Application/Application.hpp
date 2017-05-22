@@ -37,7 +37,7 @@ class Application
 
 		Rednerer->SetTargetBuffer(TargetBuffer);
 		Rednerer->SetVertices(Vertices, 4);
-		Rednerer->SetDrawingMode(DrawingMode::LINE_LOOP);
+		Rednerer->SetDrawingMode(DrawingMode::TRIANGLE_FAN);
 		Rednerer->SetVertexShader(&Shader);
 	}
 

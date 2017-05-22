@@ -45,9 +45,6 @@
     <ClInclude Include="eVolution3D\VertexShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="eVolution3D\ShaderIOData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="eVolution3D\Renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -58,6 +55,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eVolution3D\FrameBuffer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\InputAssembler.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\VertexProcessor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\UniformVariables.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\Rasterizer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
