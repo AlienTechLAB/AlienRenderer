@@ -131,17 +131,17 @@ bool CreateAndRegisterWndClass(LPCSTR className, WNDPROC windowProc)
 	wndClass.lpfnWndProc = windowProc;
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
-	wndClass.hInstance = GetModuleHandle(NULL);
-	wndClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
-	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wndClass.hbrBackground = NULL;
-	wndClass.lpszMenuName = NULL;
+	wndClass.hInstance = GetModuleHandle(nullptr);
+	wndClass.hIcon = LoadIcon(nullptr, IDI_WINLOGO);
+	wndClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wndClass.hbrBackground = nullptr;
+	wndClass.lpszMenuName = nullptr;
 	wndClass.lpszClassName = className;
 	wndClass.style = CS_HREDRAW | CS_VREDRAW;
 
 	if (RegisterClass(&wndClass) == false)
 	{
-		MessageBox(NULL, "CreateAndRegisterWndClass: RegisterClass failed.", "Error", MB_OK);
+		MessageBox(nullptr, "CreateAndRegisterWndClass: RegisterClass failed.", "Error", MB_OK);
 		return false;
 	}
 	else
@@ -154,12 +154,12 @@ bool CreateAndRegisterWndClass(LPCSTR className, WNDPROC windowProc)
 
 bool CreateAndShowWindow(int width, int height, const char* className, const char* title, int nCmdShow)
 {
-	HINSTANCE hInstance = GetModuleHandle(NULL);
-	WindowHandle = CreateWindow(className, title, WS_OVERLAPPEDWINDOW , 0, 0, width, height, NULL, NULL, hInstance, NULL);
+	HINSTANCE hInstance = GetModuleHandle(nullptr);
+	WindowHandle = CreateWindow(className, title, WS_OVERLAPPEDWINDOW , 0, 0, width, height, nullptr, nullptr, hInstance, nullptr);
 
-	if (WindowHandle == NULL)
+	if (WindowHandle == nullptr)
 	{
-		MessageBox(NULL, "CreateAndShowWindow: CreateWindow failed.", "Error", MB_OK);
+		MessageBox(nullptr, "CreateAndShowWindow: CreateWindow failed.", "Error", MB_OK);
 		return false;
 	}
 	else
@@ -186,14 +186,14 @@ bool DefinePixelFormat()
 
 	if (pf == 0)
 	{
-		MessageBox(NULL, "SetPixelFormat: ChoosePixelFormat failed.", "Error", MB_OK);
+		MessageBox(nullptr, "SetPixelFormat: ChoosePixelFormat failed.", "Error", MB_OK);
 		return false;
 	}
 	else
 	{
 		if (SetPixelFormat(deviceContext, pf, &pixelFormat) == false)
 		{
-			MessageBox(NULL, "DefinePixelFormat: SetPixelFormat failed.", "Error", MB_OK);
+			MessageBox(nullptr, "DefinePixelFormat: SetPixelFormat failed.", "Error", MB_OK);
 			return false;
 		}
 		else
@@ -235,7 +235,7 @@ int APIENTRY WinMain(HINSTANCE hCurrentInst, HINSTANCE hPreviousInst, LPSTR lpsz
 					}
 
 					Demo.MainLoopUpdate();
-					InvalidateRect(WindowHandle, NULL, false);
+					InvalidateRect(WindowHandle, nullptr, false);
 
 					if (QuitApplication)
 						break;

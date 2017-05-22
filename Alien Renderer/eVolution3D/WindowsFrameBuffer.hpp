@@ -10,7 +10,7 @@ namespace eVolution3D
 
 		private:
 		BITMAPINFO BmpInfo;
-		PixelType* Buffer = NULL;
+		PixelType* Buffer = nullptr;
 		HDC MemoryContext;
 		HBITMAP Bitmap;
 		HGDIOBJ OldBitmap;
@@ -26,12 +26,12 @@ namespace eVolution3D
 
 		public: void OnResize(int newWidth, int newHeight) override
 		{
-			if (Bitmap != NULL)
+			if (Bitmap != nullptr)
 			{
 				SelectObject(MemoryContext, OldBitmap);
 				DeleteObject(Bitmap);
 				BmpInfo = GetBitmapInfo(newWidth, newHeight);
-				Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
+				Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, nullptr, 0);
 				OldBitmap = SelectObject(MemoryContext, Bitmap);
 				UpdateAspectRatio();
 			}
@@ -46,7 +46,7 @@ namespace eVolution3D
 			HDC deviceContext = GetDC(windowHandle);
 			MemoryContext = CreateCompatibleDC(deviceContext);
 			BmpInfo = GetBitmapInfo(windowRect.right, windowRect.bottom);
-			Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, NULL, 0);
+			Bitmap = CreateDIBSection(MemoryContext, &BmpInfo, DIB_RGB_COLORS, (void**)&Buffer, nullptr, 0);
 			OldBitmap = SelectObject(MemoryContext, Bitmap);
 			ReleaseDC(windowHandle, deviceContext);
 			UpdateAspectRatio();
@@ -73,22 +73,22 @@ namespace eVolution3D
 
 		public: void Release()
 		{
-			if (OldBitmap != NULL)
+			if (OldBitmap != nullptr)
 			{
 				SelectObject(MemoryContext, OldBitmap);
-				OldBitmap = NULL;
+				OldBitmap = nullptr;
 			}
 
-			if (Bitmap != NULL)
+			if (Bitmap != nullptr)
 			{
 				DeleteObject(Bitmap);
-				Bitmap = NULL;
+				Bitmap = nullptr;
 			}
 
-			if (MemoryContext != NULL)
+			if (MemoryContext != nullptr)
 			{
 				DeleteDC(MemoryContext);
-				MemoryContext = NULL;
+				MemoryContext = nullptr;
 			}
 		}
 

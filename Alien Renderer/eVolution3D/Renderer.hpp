@@ -15,11 +15,11 @@ namespace eVolution3D
 		//---------------------------------------------------------------------------------------------------------
 
 		private:
-		FrameBuffer<Color32>* Frame = NULL;
-		Vertex3* Vertices = NULL;
+		FrameBuffer<Color32>* Frame = nullptr;
+		Vertex3* Vertices = nullptr;
 		int VerticesNo = 0;
 		DrawingMode Mode = DrawingMode::POINT;
-		VertexShader* VertShader = NULL;
+		VertexShader* VertShader = nullptr;
 		ShaderIOData ShaderIOData;
 
 		//---------------------------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ namespace eVolution3D
 
 		public: void SetVertexShader(VertexShader* vertexShader)
 		{
-			if (VertShader != NULL)
+			if (VertShader != nullptr)
 				delete VertShader;
 
 			VertShader = vertexShader;

@@ -11,16 +11,16 @@ class Application
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	FrameBuffer<Color32>* Frame = NULL;
-	Renderer* Rednerer = NULL;
-	Vertex3*  Vertices = NULL;
+	FrameBuffer<Color32>* TargetBuffer = nullptr;
+	Renderer* Rednerer = nullptr;
+	Vertex3*  Vertices = nullptr;
 	VertexShaderMVP Shader;
 
 	//---------------------------------------------------------------------------------------------------------
 
 	public: void SetFrameBuffer(FrameBuffer<Color32>* frameBuffer)
 	{
-		Frame = frameBuffer;
+		TargetBuffer = frameBuffer;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ class Application
 		Vertices[2].x =  0.5f; Vertices[2].y =-0.5f; Vertices[2].z = 0.0f;
 		Vertices[3].x = -0.5f; Vertices[3].y =-0.5f; Vertices[3].z = 0.0f;
 
-		Rednerer->SetTargetBuffer(Frame);
+		Rednerer->SetTargetBuffer(TargetBuffer);
 		Rednerer->SetVertices(Vertices, 4);
 		Rednerer->SetDrawingMode(DrawingMode::LINE_LOOP);
 		Rednerer->SetVertexShader(&Shader);
@@ -88,16 +88,16 @@ class Application
 
 	public: void Release()
 	{
-		if (Rednerer != NULL)
+		if (Rednerer != nullptr)
 		{
 			delete Rednerer;
-			Rednerer = NULL;
+			Rednerer = nullptr;
 		}
 
-		if (Vertices != NULL)
+		if (Vertices != nullptr)
 		{
 			delete[] Vertices;
-			Vertices = NULL;
+			Vertices = nullptr;
 		}
 	}
 
