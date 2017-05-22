@@ -9,6 +9,7 @@ namespace eVolution3D
 
 	enum class DrawingMode
 	{
+		NONE,
 		POINT,
 		LINE,
 		LINE_STRIP,

@@ -74,6 +74,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>E:\Alien TechLAB\Graphics3D\AlienRenderer\Alien Renderer;$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjrctDir)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>E:\Alien TechLAB\Graphics3D\AlienRenderer\Alien Renderer;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjrctDir)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -120,14 +126,17 @@
     <ClInclude Include="eVolution3D\Constants.h" />
     <ClInclude Include="eVolution3D\Enums.h" />
     <ClInclude Include="eVolution3D\FrameBuffer.hpp" />
+    <ClInclude Include="eVolution3D\InputAssembler.hpp" />
     <ClInclude Include="eVolution3D\Math.hpp" />
     <ClInclude Include="eVolution3D\Matrix4x4.hpp" />
+    <ClInclude Include="eVolution3D\Rasterizer.hpp" />
     <ClInclude Include="eVolution3D\Vertex3.hpp" />
     <ClInclude Include="eVolution3D\Vertex4.hpp" />
     <ClInclude Include="eVolution3D\Renderer.hpp" />
-    <ClInclude Include="eVolution3D\ShaderIOData.h" />
+    <ClInclude Include="eVolution3D\UniformVariables.h" />
     <ClInclude Include="eVolution3D\Vector3.hpp" />
     <ClInclude Include="eVolution3D\Vector4.hpp" />
+    <ClInclude Include="eVolution3D\VertexProcessor.hpp" />
     <ClInclude Include="eVolution3D\VertexShader.hpp" />
     <ClInclude Include="eVolution3D\WindowsFrameBuffer.hpp" />
   </ItemGroup>
