@@ -13,7 +13,7 @@
 
 namespace eVolution3D
 {
-	class Renderer
+	class GraphicsPipeline
 	{
 		//---------------------------------------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ namespace eVolution3D
 
 		//---------------------------------------------------------------------------------------------------------
 
-		public: Renderer()
+		public: GraphicsPipeline()
 		{
 			InputAssemblerStage.SetVertexProcessor(&VertexProcessorStage);
 			VertexProcessorStage.SetRasterizer(&RasterizerStage);

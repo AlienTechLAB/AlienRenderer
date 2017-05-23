@@ -1,6 +1,6 @@
 #pragma once
 #include <time.h>
-#include "eVolution3D/Renderer.hpp"
+#include "eVolution3D/GraphicsPipeline.hpp"
 #include "eVolution3D/Vertex3.hpp"
 #include "eVolution3D/Matrix4x4.hpp"
 
@@ -12,7 +12,7 @@ class Application
 
 	private:
 	FrameBuffer<Color32>* TargetBuffer = nullptr;
-	Renderer* Rednerer = nullptr;
+	GraphicsPipeline* Pipeline = nullptr;
 	Vertex3*  Vertices = nullptr;
 	VertexShaderMVP Shader;
 
@@ -27,7 +27,7 @@ class Application
 
 	public: void Start()
 	{
-		Rednerer = new Renderer();
+		Pipeline = new GraphicsPipeline();
 
 		Vertices = new Vertex3[4];
 		Vertices[0].x = -0.5f; Vertices[0].y = 0.5f; Vertices[0].z = 0.0f;
@@ -35,10 +35,10 @@ class Application
 		Vertices[2].x =  0.5f; Vertices[2].y =-0.5f; Vertices[2].z = 0.0f;
 		Vertices[3].x = -0.5f; Vertices[3].y =-0.5f; Vertices[3].z = 0.0f;
 
-		Rednerer->SetTargetBuffer(TargetBuffer);
-		Rednerer->SetVertices(Vertices, 4);
-		Rednerer->SetDrawingMode(DrawingMode::TRIANGLE_FAN);
-		Rednerer->SetVertexShader(&Shader);
+		Pipeline->SetTargetBuffer(TargetBuffer);
+		Pipeline->SetVertices(Vertices, 4);
+		Pipeline->SetDrawingMode(DrawingMode::TRIANGLE_FAN);
+		Pipeline->SetVertexShader(&Shader);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ class Application
 		projection.SetFrustumProjection(-1.0f, 1.0f, -1.0f, 1.0f, 1.0f, 20.0f);
 
 		Matrix4x4 mvp = projection * view * model;
-		Rednerer->SetMVPMatrix(mvp);
+		Pipeline->SetMVPMatrix(mvp);
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -73,8 +73,8 @@ class Application
 
 	public: void UpdateFrameBuffer()
 	{
-		Rednerer->ClearBufferWithColor(Color32::Black);
-		Rednerer->Render();
+		Pipeline->ClearBufferWithColor(Color32::Black);
+		Pipeline->Render();
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -88,10 +88,10 @@ class Application
 
 	public: void Release()
 	{
-		if (Rednerer != nullptr)
+		if (Pipeline != nullptr)
 		{
-			delete Rednerer;
-			Rednerer = nullptr;
+			delete Pipeline;
+			Pipeline = nullptr;
 		}
 
 		if (Vertices != nullptr)

@@ -132,7 +132,7 @@
     <ClInclude Include="eVolution3D\Rasterizer.hpp" />
     <ClInclude Include="eVolution3D\Vertex3.hpp" />
     <ClInclude Include="eVolution3D\Vertex4.hpp" />
-    <ClInclude Include="eVolution3D\Renderer.hpp" />
+    <ClInclude Include="eVolution3D\GraphicsPipeline.hpp" />
     <ClInclude Include="eVolution3D\UniformVariables.h" />
     <ClInclude Include="eVolution3D\Vector3.hpp" />
     <ClInclude Include="eVolution3D\Vector4.hpp" />
