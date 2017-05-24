@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 #include <exception>
-#include "eVolution3D/FrameBuffer.hpp"
+#include "eVolution3D/TargetBuffer.hpp"
 #include "eVolution3D/Constants.h"
 #include "eVolution3D/Color32.hpp"
 #include "eVolution3D/Vertex3.hpp"
@@ -18,7 +18,7 @@ namespace eVolution3D
 		//---------------------------------------------------------------------------------------------------------
 
 		private:
-		FrameBuffer<Color32>* TargetBuffer = nullptr;
+		TargetBuffer<Color32>* FrameBuffer = nullptr;
 		InputAssembler        InputAssemblerStage;
 		VertexProcessor       VertexProcessorStage;
 		Rasterizer            RasterizerStage;
@@ -34,9 +34,9 @@ namespace eVolution3D
 
 		//---------------------------------------------------------------------------------------------------------
 
-		public: void SetTargetBuffer(FrameBuffer<Color32>* targetBuffer)
+		public: void SetTargetBuffer(TargetBuffer<Color32>* targetBuffer)
 		{
-			TargetBuffer = targetBuffer;
+			FrameBuffer = targetBuffer;
 			RasterizerStage.SetTargetBuffer(targetBuffer);
 			VertexProcessorStage.SetTargetBuffer(targetBuffer);
 		}

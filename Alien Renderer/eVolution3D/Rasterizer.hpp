@@ -1,5 +1,5 @@
 #pragma once
-#include "eVolution3D/FrameBuffer.hpp"
+#include "eVolution3D/TargetBuffer.hpp"
 
 using namespace eVolution3D;
 
@@ -8,13 +8,13 @@ class Rasterizer
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	FrameBuffer<Color32>* TargetBuffer = nullptr;
+	TargetBuffer<Color32>* FrameBuffer = nullptr;
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetTargetBuffer(FrameBuffer<Color32>* frameBuffer)
+	public: void SetTargetBuffer(TargetBuffer<Color32>* targetBuffer)
 	{
-		TargetBuffer = frameBuffer;
+		FrameBuffer = targetBuffer;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ class Rasterizer
 	{
 		int x = (int)(vertices[0].x + 0.5f);
 		int y = (int)(vertices[0].y + 0.5f);
-		Color32* address = TargetBuffer->GetPixelAddress(x, y);
+		Color32* address = FrameBuffer->GetPixelAddress(x, y);
 		*address = color;
 	}
 
@@ -52,8 +52,8 @@ class Rasterizer
 		if (y1 < 0 && y2 < 0)
 			return;
 
-		int r = TargetBuffer->GetWidth() - 1;
-		int t = TargetBuffer->GetHeight() - 1;
+		int r = FrameBuffer->GetWidth() - 1;
+		int t = FrameBuffer->GetHeight() - 1;
 
 		if (x1 > r && x2 > r)
 			return;
@@ -68,7 +68,7 @@ class Rasterizer
 			if (y1 == y2)
 			{
 				// Draw dot - it's for sure on the screen
-				TargetBuffer->PutPixel(x1, y1, color);
+				FrameBuffer->PutPixel(x1, y1, color);
 				return;
 			}
 			else
@@ -146,8 +146,8 @@ class Rasterizer
 			yMax = y1;
 		}
 
-		int screenWidth = TargetBuffer->GetWidth();
-		Color32* address = TargetBuffer->GetPixelAddress(x, yMin);
+		int screenWidth = FrameBuffer->GetWidth();
+		Color32* address = FrameBuffer->GetPixelAddress(x, yMin);
 
 		for (int y = yMin; y <= yMax; y++)
 		{
@@ -173,7 +173,7 @@ class Rasterizer
 			xMax = x1;
 		}
 
-		Color32* address = TargetBuffer->GetPixelAddress(xMin, y);
+		Color32* address = FrameBuffer->GetPixelAddress(xMin, y);
 
 		for (int y = xMin; y <= xMax; y++)
 		{
@@ -186,8 +186,8 @@ class Rasterizer
 
 	private: void DrawDiagonalLine(int x1, int y1, int x2, int y2, Color32 color)
 	{
-		Color32* address = TargetBuffer->GetPixelAddress(x1, y1);
-		int screenWidth = TargetBuffer->GetWidth();
+		Color32* address = FrameBuffer->GetPixelAddress(x1, y1);
+		int screenWidth = FrameBuffer->GetWidth();
 
 		// Bresenham's line algorithm
 		*address = color;

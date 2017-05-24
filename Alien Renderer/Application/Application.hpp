@@ -3,6 +3,7 @@
 #include "eVolution3D/GraphicsPipeline.hpp"
 #include "eVolution3D/Vertex3.hpp"
 #include "eVolution3D/Matrix4x4.hpp"
+#include "eVolution3D/TargetBuffer.hpp"
 
 using namespace eVolution3D;
 
@@ -11,16 +12,16 @@ class Application
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	FrameBuffer<Color32>* TargetBuffer = nullptr;
+	TargetBuffer<Color32>* FrameBuffer = nullptr;
 	GraphicsPipeline* Pipeline = nullptr;
 	Vertex3*  Vertices = nullptr;
 	VertexShaderMVP Shader;
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetFrameBuffer(FrameBuffer<Color32>* frameBuffer)
+	public: void SetFrameBuffer(TargetBuffer<Color32>* frameBuffer)
 	{
-		TargetBuffer = frameBuffer;
+		FrameBuffer = frameBuffer;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -35,7 +36,7 @@ class Application
 		Vertices[2].x =  0.5f; Vertices[2].y =-0.5f; Vertices[2].z = 0.0f;
 		Vertices[3].x = -0.5f; Vertices[3].y =-0.5f; Vertices[3].z = 0.0f;
 
-		Pipeline->SetTargetBuffer(TargetBuffer);
+		Pipeline->SetTargetBuffer(FrameBuffer);
 		Pipeline->SetVertices(Vertices, 4);
 		Pipeline->SetDrawingMode(DrawingMode::TRIANGLE_FAN);
 		Pipeline->SetVertexShader(&Shader);
@@ -73,7 +74,7 @@ class Application
 
 	public: void UpdateFrameBuffer()
 	{
-		TargetBuffer->Clear(Color32::Black);
+		FrameBuffer->Clear(Color32::Black);
 		Pipeline->Render();
 	}
 

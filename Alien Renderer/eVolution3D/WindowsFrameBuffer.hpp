@@ -1,10 +1,10 @@
 #pragma once
 #include <windows.h>
-#include "FrameBuffer.hpp"
+#include "TargetBuffer.hpp"
 
 namespace eVolution3D
 {
-	template <typename PixelType> class WindowsFrameBuffer : public FrameBuffer<PixelType>
+	template <typename PixelType> class WindowsFrameBuffer : public TargetBuffer<PixelType>
 	{
 		//---------------------------------------------------------------------------------------------------------
 

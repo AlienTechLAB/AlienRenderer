@@ -51,9 +51,6 @@
     <ClInclude Include="eVolution3D\Math.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="eVolution3D\FrameBuffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="eVolution3D\InputAssembler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -67,6 +64,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eVolution3D\GraphicsPipeline.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="eVolution3D\TargetBuffer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

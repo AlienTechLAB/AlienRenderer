@@ -3,7 +3,7 @@
 
 namespace eVolution3D
 {
-	template <typename PixelType> class FrameBuffer
+	template <typename PixelType> class TargetBuffer
 	{
 		//---------------------------------------------------------------------------------------------------------
 

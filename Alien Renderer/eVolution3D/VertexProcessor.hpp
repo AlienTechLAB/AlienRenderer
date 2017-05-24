@@ -11,7 +11,7 @@ class VertexProcessor
 	//---------------------------------------------------------------------------------------------------------
 
 	private:
-	FrameBuffer<Color32>* TargetBuffer = nullptr;
+	TargetBuffer<Color32>* FrameBuffer = nullptr;
 	VertexShader*         VertShader = nullptr;
 	UniformVariables      UniVariables;
 	Vertex4               TransformedVertices[3];
@@ -19,9 +19,9 @@ class VertexProcessor
 
 	//---------------------------------------------------------------------------------------------------------
 
-	public: void SetTargetBuffer(FrameBuffer<Color32>* frameBuffer)
+	public: void SetTargetBuffer(TargetBuffer<Color32>* targetBuffer)
 	{
-		TargetBuffer = frameBuffer;
+		FrameBuffer = targetBuffer;
 	}
 
 	//---------------------------------------------------------------------------------------------------------
@@ -88,9 +88,9 @@ class VertexProcessor
 
 	private: void ViewportTransformation(Vertex4* vertex)
 	{
-		float halfWidth = (float)(TargetBuffer->GetWidth() >> 1);
-		float halfHeight = (float)(TargetBuffer->GetHeight() >> 1);
-		vertex->x = (vertex->x / TargetBuffer->GetAspectRatio()) * halfWidth + halfWidth;
+		float halfWidth = (float)(FrameBuffer->GetWidth() >> 1);
+		float halfHeight = (float)(FrameBuffer->GetHeight() >> 1);
+		vertex->x = (vertex->x / FrameBuffer->GetAspectRatio()) * halfWidth + halfWidth;
 		vertex->y = vertex->y * halfHeight + halfHeight;
 	}
 
