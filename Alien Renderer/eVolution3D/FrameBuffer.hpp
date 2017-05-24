@@ -19,6 +19,7 @@ namespace eVolution3D
 		virtual void OnResize(int newWidth, int newheight) = 0;
 		virtual void PutPixel(int x, int y, PixelType color) = 0;
 		virtual PixelType* GetPixelAddress(int x, int y) = 0;
+		virtual void Clear(PixelType color) = 0;
 
 		//---------------------------------------------------------------------------------------------------------
 

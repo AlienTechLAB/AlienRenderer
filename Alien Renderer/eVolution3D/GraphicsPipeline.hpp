@@ -75,17 +75,6 @@ namespace eVolution3D
 
 		//---------------------------------------------------------------------------------------------------------
 
-		public: void ClearBufferWithColor(Color32 color)
-		{
-			int bufferSize = TargetBuffer->GetBufferSizeInPixels();
-			Color32* buffer = (Color32*)TargetBuffer->GetBuffer();
-
-			for (int i = 0; i < bufferSize; i++)
-				buffer[i] = color;
-		}
-
-		//---------------------------------------------------------------------------------------------------------
-
 		public: void Render()
 		{
 			InputAssemblerStage.Render();

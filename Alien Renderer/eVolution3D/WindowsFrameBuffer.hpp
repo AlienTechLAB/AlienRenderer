@@ -150,5 +150,16 @@ namespace eVolution3D
 		}
 
 		//---------------------------------------------------------------------------------------------------------
+
+		public: void Clear(PixelType color)
+		{
+			int bufferSize = GetBufferSizeInPixels();
+			PixelType* buffer = (PixelType*)GetBuffer();
+
+			for (int i = 0; i < bufferSize; i++)
+				buffer[i] = color;
+		}
+
+		//---------------------------------------------------------------------------------------------------------
 	};
 }

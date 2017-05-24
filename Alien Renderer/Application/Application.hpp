@@ -73,7 +73,7 @@ class Application
 
 	public: void UpdateFrameBuffer()
 	{
-		Pipeline->ClearBufferWithColor(Color32::Black);
+		TargetBuffer->Clear(Color32::Black);
 		Pipeline->Render();
 	}
 
